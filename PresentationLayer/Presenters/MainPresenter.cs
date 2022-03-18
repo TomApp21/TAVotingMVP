@@ -54,6 +54,8 @@ namespace PresentationLayer.Presenters
 
             _mainView.MainViewLoadedEventRaised += new EventHandler(OnMainViewLoadedEventRaised);
 
+            _mainView.LoggedInSuccessfullyEventRaised += new EventHandler(OnLogInSuccessEventRaised);
+
         }
 
         public void OnMainViewLoadedEventRaised(object sender, System.EventArgs e)
@@ -63,15 +65,12 @@ namespace PresentationLayer.Presenters
             _userControList.Add((UserControl)_userRegisterPresenter.GetRegisterUserViewUC());
 
             AssignUserControlToMainViewPanel((BaseUserControUC)_userLoginPresenter.GetLoginUserViewUC());
-         
 
+            _userLoginPresenter.SetupUserForLogin();
             SetUserControlVisibleInPanel((UserControl)_userLoginPresenter.GetLoginUserViewUC());
         }
 
  
-
-
-
         public void OnUserLoginBtnClickEventRaised(object sender, System.EventArgs e)
         {
             _userLoginPresenter.SetupUserForLogin();
@@ -92,6 +91,13 @@ namespace PresentationLayer.Presenters
             SetUserControlVisibleInPanel((UserControl)_voterRegistrationPresenter.GetRegisterVoterViewUC());
         }
   
+
+        public void OnLogInSuccessEventRaised(object sender, System.EventArgs e)
+        {
+            // SETR UP, pass in id?
+            int u = _userLoginPresenter.UserId;
+            SetUserControlVisibleInPanel((UserControl)_voterRegistrationPresenter.GetRegisterVoterViewUC());
+        }
 
         private void AssignUserControlToMainViewPanel(BaseUserControUC baseUserControl)
         {

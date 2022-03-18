@@ -1,6 +1,7 @@
 ﻿using CommonComponents;
 using CommonComponets;
 using DomainLayer.Models.User;
+using PresentationLayer.Views;
 using PresentationLayer.Views.UserControls;
 using ServiceLayer.Services.LoginServices;
 using System;
@@ -16,7 +17,7 @@ namespace PresentationLayer.Presenters.UserControls
 {
     public class LoginPresenter : BasePresenter, ILoginPresenter
     {
-
+         
         public event EventHandler UserLoginViewReadyToShowEventRaised;
         public event EventHandler UserLoginCancelBtnClickEventRaised;
         public event EventHandler<AccessTypeEventArgs> UserLoginBtnClickEventRaised;
@@ -24,11 +25,16 @@ namespace PresentationLayer.Presenters.UserControls
         private ILoginUC _userLoginViewUC;
         private IUserServices _userServices;
         private IUserModel _userModelWithoutBinding;
-        private IUserModel _loggedInUserModel;
+        
+        public IUserModel _loggedInUserModel;
+
+        private IMainView _mainView;
+        private IMainPresenter _mainPresenter;
 
         // Fields recreated here from UserModel to be databound to the View
         private string _username;
         private string _password;
+        private int _userId;
 
         public ILoginUC GetLoginUserViewUC()
         {
@@ -38,12 +44,13 @@ namespace PresentationLayer.Presenters.UserControls
 
         public LoginPresenter(ILoginUC userLoginViewUC,
                                  IUserServices userServices,
-                                 IUserModel userModelWithoutBinding)
+                                 IUserModel userModelWithoutBinding, IMainView mainView)
                                  
         {
             _userLoginViewUC = userLoginViewUC;
             _userServices = userServices;
             _userModelWithoutBinding = userModelWithoutBinding;
+            _mainView = mainView;
 
             SubscribeToEventsSetup();
         }
@@ -53,6 +60,9 @@ namespace PresentationLayer.Presenters.UserControls
             _userLoginViewUC.UserLoginBtnClickEventRaised += new EventHandler<AccessTypeEventArgs>(OnUserLoginBtnClickEventRaised);
 
             _userLoginViewUC.UserLoginCancelBtnClickEventRaised += new EventHandler(OnUserLoginCancelBtnClickEventRaised);
+
+            //_mainView.LoggedInSuccessfullyEventRaised += new
+            
         }
 
         public void SetupUserForLogin()
@@ -107,11 +117,27 @@ namespace PresentationLayer.Presenters.UserControls
 
             // Display success message/ clear bindings
             // ---------------------------------------
-            if (_loggedInUserModel != null)
+
+            MessageBox.Show("User Successfully logged in");
+            _userLoginViewUC.ClearExistingBindings();
+
+            if (_loggedInUserModel.IsVoter)
             {
-                MessageBox.Show("User Successfully logged in");
-                _userLoginViewUC.ClearExistingBindings();
+                _userId = _loggedInUserModel.UserId;
+                _mainView.ShowVoterButtons(_userId, new EventArgs());
+
+                // presenter . show . set up
             }
+            else if (_loggedInUserModel.IsAdmin)
+            {
+                _mainView.ShowAdminButtons();
+            }
+            else // Auditor
+            {
+                _mainView.ShowAuditorButtons();
+            }
+
+            _userId = _loggedInUserModel.UserId;
         }
 
 
@@ -140,6 +166,16 @@ namespace PresentationLayer.Presenters.UserControls
             _userModelWithoutBinding.Password = string.Empty;
         }
 
+        public int UserId
+        {
+            get { return this._userId; }
+            set
+            {
+                if (value == this._userId) return;
+                this._userId = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         public string Username
         {

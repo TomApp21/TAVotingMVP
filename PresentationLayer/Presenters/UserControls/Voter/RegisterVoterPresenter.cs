@@ -24,9 +24,16 @@ namespace PresentationLayer.Presenters.UserControls.Voter
         //IUserModel _userModel;
 
         // Fields recreated here from UserModel to be databound to the View
-        private string _username;
-        private string _password;
-        private string _confirmPassword;
+        private string _firstName;
+        private string _lastName;
+        private string _dateOfBirth;
+        private string _nationalInsurance;
+        private string _addrLine1;
+        private string _addrLine2;
+        private string _postCode;
+        private int _electionId;
+
+
 
 
         public IVoterRegistrationUC GetRegisterVoterViewUC()

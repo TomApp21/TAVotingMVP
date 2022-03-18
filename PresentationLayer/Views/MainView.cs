@@ -14,6 +14,7 @@ namespace PresentationLayer.Views
         public event EventHandler RegisterMenuBtnClickEventRaised;
         public event EventHandler RegisterVoterMenuBtnClickEventRaised;
 
+        public event EventHandler LoggedInSuccessfullyEventRaised;
 
 
         private Panel _userControlPanelOrigValues = null;
@@ -23,6 +24,8 @@ namespace PresentationLayer.Views
         private List<Button> VotersButtonList = null;
         private List<Button> LoginButtonList = null;
         private List<Button> AuditorsButtonList = null;
+        private List<Button> AdminButtonList = null;
+
 
 
 
@@ -62,6 +65,36 @@ namespace PresentationLayer.Views
         //}
 
 
+        public void ShowVoterButtons(int userId, EventArgs e)  // pass in user model or id?
+        {
+            ButtonHelper.HideAllButtons(NavigationButtonList);
+            ButtonHelper.SetVisibilityOfButtons(VotersButtonList);
+
+            EventHelpers.RaiseEvent(this, LoggedInSuccessfullyEventRaised, e);
+
+        }
+
+        public void ShowVoterButtonsEvent(EventArgs e)
+        {
+            EventHelpers.RaiseEvent(this, LoggedInSuccessfullyEventRaised, e);
+
+        }
+
+
+        public void ShowAdminButtons()
+        {
+            ButtonHelper.HideAllButtons(NavigationButtonList);
+            ButtonHelper.SetVisibilityOfButtons(AdminButtonList);
+            // raise event
+        }
+
+        public void ShowAuditorButtons()
+        {
+            ButtonHelper.HideAllButtons(NavigationButtonList);
+            ButtonHelper.SetVisibilityOfButtons(AuditorsButtonList);
+        }
+
+
 
 
         private void MainView_Load(object sender, EventArgs e)
@@ -69,6 +102,8 @@ namespace PresentationLayer.Views
             NavigationButtonList = new List<Button>() { loginBtn, registerBtn, registerVoterButton, CastVoteButton, CreateCandidateBtn, CreateElectionBtn, ViewElectionBtn };
             VotersButtonList = new List<Button>() { registerVoterButton, CastVoteButton };
             LoginButtonList = new List<Button>() {loginBtn, registerBtn };
+            AdminButtonList = new List<Button>() { ConfirmIdentitiesButton, CreateCandidateBtn, CreateElectionBtn };
+            AuditorsButtonList = new List<Button>() { ViewElectionBtn };
 
             //ButtonHelper.SetGroupToBorderless(NavigationButtonList);
             ButtonHelper.HideAllButtons(NavigationButtonList);

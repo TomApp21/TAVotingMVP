@@ -47,17 +47,17 @@ namespace PresentationLayer.Views.UserControls.Voter
         {
             ClearExistingBindings();
 
-            UsernameTextInputUC.InputBoxDataBindings.Add(bindingDictionary["Username"]);
-            PasswordTextInputUC.InputBoxDataBindings.Add(bindingDictionary["Password"]);
+            FirstNameTextInputUC.InputBoxDataBindings.Add(bindingDictionary["Username"]);
+            LastNameTextInputUCoxUC2.InputBoxDataBindings.Add(bindingDictionary["Password"]);
         }
 
         public void ClearExistingBindings()
         {
-            UsernameTextInputUC.InputBoxText = "";
-            PasswordTextInputUC.InputBoxText = "";
+            FirstNameTextInputUC.InputBoxText = "";
+            LastNameTextInputUCoxUC2.InputBoxText = "";
 
-            UsernameTextInputUC.InputBoxDataBindings.Clear();
-            PasswordTextInputUC.InputBoxDataBindings.Clear();
+            FirstNameTextInputUC.InputBoxDataBindings.Clear();
+            LastNameTextInputUCoxUC2.InputBoxDataBindings.Clear();
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using PresentationLayer.Views.UserControls;
 using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace PresentationLayer.Views
@@ -11,6 +12,7 @@ namespace PresentationLayer.Views
         event EventHandler RegisterMenuBtnClickEventRaised;
         event EventHandler RegisterVoterMenuBtnClickEventRaised;
 
+        event EventHandler LoggedInSuccessfullyEventRaised;
 
 
 
@@ -18,5 +20,10 @@ namespace PresentationLayer.Views
         void ShowMainView();
         void ExpandUserControlPanel();
         void ResetUserControlPanelSizeandLocation();
+
+        void ShowVoterButtons(int id, EventArgs e);
+        void ShowAdminButtons();
+        void ShowAuditorButtons();
+
     }
 }
