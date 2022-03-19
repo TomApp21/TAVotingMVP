@@ -26,8 +26,8 @@ namespace PresentationLayer.Views.UserControls.Voter
             }
         }
 
-        public event EventHandler<AccessTypeEventArgs> UserLoginBtnClickEventRaised;
-        public event EventHandler UserLoginCancelBtnClickEventRaised;
+        public event EventHandler<AccessTypeEventArgs> VoterRegistrationBtnClickEventRaised;
+        public event EventHandler VoterRegClearBtnClickEventRaised;
 
         public VoterRegistrationUC()
         {
@@ -47,8 +47,15 @@ namespace PresentationLayer.Views.UserControls.Voter
         {
             ClearExistingBindings();
 
-            FirstNameTextInputUC.InputBoxDataBindings.Add(bindingDictionary["Username"]);
-            LastNameTextInputUCoxUC2.InputBoxDataBindings.Add(bindingDictionary["Password"]);
+            FirstNameTextInputUC.InputBoxDataBindings.Add(bindingDictionary["FirstName"]);
+            LastNameTextInputUCoxUC2.InputBoxDataBindings.Add(bindingDictionary["LastName"]);
+            DOBTextInputBoxUC.InputBoxDataBindings.Add(bindingDictionary["DateOfBirth"]);
+            AddLine1TextBoxInputUC.InputBoxDataBindings.Add(bindingDictionary["AddressLine1"]);
+            AddLine2TextBoxInputUC.InputBoxDataBindings.Add(bindingDictionary["AddressLine2"]);
+            PostcodeTextBoxInputUC.InputBoxDataBindings.Add(bindingDictionary["Postcode"]);
+            NatInsTextInputBoxUC.InputBoxDataBindings.Add(bindingDictionary["NationalInsurance"]);
+            //electioni.InputBoxDataBindings.Add(bindingDictionary["LastName"]);
+
         }
 
         public void ClearExistingBindings()
@@ -58,20 +65,52 @@ namespace PresentationLayer.Views.UserControls.Voter
 
             FirstNameTextInputUC.InputBoxDataBindings.Clear();
             LastNameTextInputUCoxUC2.InputBoxDataBindings.Clear();
+            DOBTextInputBoxUC.InputBoxDataBindings.Clear();
+            AddLine1TextBoxInputUC.InputBoxDataBindings.Clear();
+            AddLine2TextBoxInputUC.InputBoxDataBindings.Clear();
+            PostcodeTextBoxInputUC.InputBoxDataBindings.Clear();
+            NatInsTextInputBoxUC.InputBoxDataBindings.Clear();
         }
 
-
-        private void CancelButton_Click(object sender, EventArgs e)
+        private void CancelButton_Click_1(object sender, EventArgs e)
         {
-            EventHelpers.RaiseEvent(this, UserLoginCancelBtnClickEventRaised, e);
+            EventHelpers.RaiseEvent(this, VoterRegClearBtnClickEventRaised, e);
 
         }
 
-        private void LoginButton_Click(object sender, EventArgs e)
+        private void RegisterButton_Click_1(object sender, EventArgs e)
         {
-            EventHelpers.RaiseEvent(this, UserLoginBtnClickEventRaised, (AccessTypeEventArgs)_accessTypeEventArgs);
+            EventHelpers.RaiseEvent(this, VoterRegistrationBtnClickEventRaised, (AccessTypeEventArgs)_accessTypeEventArgs);
 
         }
 
+        public void FormatAlreadyRegisteredView()
+        {
+            FirstNameTextInputUC.InputBoxReadOnly = true;
+            LastNameTextInputUCoxUC2.InputBoxReadOnly = true;
+            DOBTextInputBoxUC.InputBoxReadOnly = true;
+            AddLine1TextBoxInputUC.InputBoxReadOnly = true;
+            AddLine2TextBoxInputUC.InputBoxReadOnly = true;
+            PostcodeTextBoxInputUC.InputBoxReadOnly = true;
+            NatInsTextInputBoxUC.InputBoxReadOnly = true;
+
+            ClearButton.Visible = false;
+            RegisterButton.Visible = false;
+            alreadyRegisteredLabel.Visible = true;
+        }
+
+        private void VoterRegistrationUC_Load(object sender, EventArgs e)
+        {
+            //if (FirstNameTextInputUC.InputBoxText != String.Empty)
+            //{
+            //    FirstNameTextInputUC.InputBoxReadOnly = true;
+            //    LastNameTextInputUCoxUC2.InputBoxReadOnly = true;
+            //    DOBTextInputBoxUC.InputBoxReadOnly = true;
+            //    AddLine1TextBoxInputUC.InputBoxReadOnly = true;
+            //    AddLine2TextBoxInputUC.InputBoxReadOnly = true;
+            //    PostcodeTextBoxInputUC.InputBoxReadOnly = true;
+            //    NatInsTextInputBoxUC.InputBoxReadOnly = true;
+            //}
+        }
     }
 }

@@ -19,6 +19,11 @@ namespace PresentationLayer.Presenters.UserControls
         string Password { get; set; }
        
         int UserId { get; set; }
+        bool IsAdmin { get; set; }
+        bool IsVoter { get; set; }
+        bool IsAuditor { get; set; }
+
+
 
         event PropertyChangedEventHandler PropertyChanged;
         void SetupUserForLogin();

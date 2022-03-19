@@ -51,6 +51,9 @@
     <Compile Include="Services\UserServices\IUserRepository.cs" />
     <Compile Include="Services\UserServices\IUserServices.cs" />
     <Compile Include="Services\UserServices\UserServices.cs" />
+    <Compile Include="Services\VoterServices\IVoterRepository.cs" />
+    <Compile Include="Services\VoterServices\IVoterServices.cs" />
+    <Compile Include="Services\VoterServices\VoterServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommonComponents\CommonComponents.csproj">

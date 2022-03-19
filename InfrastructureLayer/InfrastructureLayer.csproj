@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="DataAccess\Repositories\Specific\BaseSpecificRepository.cs" />
     <Compile Include="DataAccess\Repositories\Specific\UserRepository.cs" />
+    <Compile Include="DataAccess\Repositories\Specific\VoterRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -82,9 +83,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Content Include="MDIS.db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -9,11 +9,13 @@ namespace PresentationLayer.Views.UserControls.Voter
     {
         AccessTypeEventArgs AccessTypeEventArgs { get; set; }
 
-        event EventHandler<AccessTypeEventArgs> UserLoginBtnClickEventRaised;
-        event EventHandler UserLoginCancelBtnClickEventRaised;
+        event EventHandler<AccessTypeEventArgs> VoterRegistrationBtnClickEventRaised;
+        event EventHandler VoterRegClearBtnClickEventRaised;
 
         void BindUserModelToView(Dictionary<string, Binding> bindingDictionary);
         void ClearExistingBindings();
         void SetUpVoterRegistrationView(Dictionary<string, Binding> bindingDictionary, AccessTypeEventArgs accessTypeEventArgs);
+
+        void FormatAlreadyRegisteredView();
     }
 }

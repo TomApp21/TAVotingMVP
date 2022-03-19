@@ -63,8 +63,12 @@ namespace PresentationLayer.Presenters
             _userControList = new List<UserControl>();
             _userControList.Add((UserControl)_userLoginPresenter.GetLoginUserViewUC());
             _userControList.Add((UserControl)_userRegisterPresenter.GetRegisterUserViewUC());
+            _userControList.Add((UserControl)_voterRegistrationPresenter.GetRegisterVoterViewUC());
 
             AssignUserControlToMainViewPanel((BaseUserControUC)_userLoginPresenter.GetLoginUserViewUC());
+            AssignUserControlToMainViewPanel((BaseUserControUC)_userRegisterPresenter.GetRegisterUserViewUC());
+            AssignUserControlToMainViewPanel((BaseUserControUC)_voterRegistrationPresenter.GetRegisterVoterViewUC());
+
 
             _userLoginPresenter.SetupUserForLogin();
             SetUserControlVisibleInPanel((UserControl)_userLoginPresenter.GetLoginUserViewUC());
@@ -79,7 +83,6 @@ namespace PresentationLayer.Presenters
 
         public void OnUserRegisterBtnClickEventRaised(object sender, System.EventArgs e)
         {
-            AssignUserControlToMainViewPanel((BaseUserControUC)_userRegisterPresenter.GetRegisterUserViewUC());
 
             _userRegisterPresenter.SetupUserRegForAdd();
             SetUserControlVisibleInPanel((UserControl)_userRegisterPresenter.GetRegisterUserViewUC());
@@ -87,8 +90,11 @@ namespace PresentationLayer.Presenters
 
         public void OnVoterRegisterBtnClickEventRaised(object sender, System.EventArgs e)
         {
-            //_voterRegistrationPresenter.SetupUserRegForAdd();
-            SetUserControlVisibleInPanel((UserControl)_voterRegistrationPresenter.GetRegisterVoterViewUC());
+            int u = _userLoginPresenter.UserId;
+
+            _voterRegistrationPresenter.SetupVoterReg(u);
+
+            SetUserControlVisibleInPanel((UserControl)_voterRegistrationPresenter.GetRegisterVoterViewUC(u));
         }
   
 
@@ -96,7 +102,10 @@ namespace PresentationLayer.Presenters
         {
             // SETR UP, pass in id?
             int u = _userLoginPresenter.UserId;
-            SetUserControlVisibleInPanel((UserControl)_voterRegistrationPresenter.GetRegisterVoterViewUC());
+
+            _voterRegistrationPresenter.SetupVoterReg(u);
+
+            SetUserControlVisibleInPanel((UserControl)_voterRegistrationPresenter.GetRegisterVoterViewUC(u));
         }
 
         private void AssignUserControlToMainViewPanel(BaseUserControUC baseUserControl)

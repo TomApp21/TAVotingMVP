@@ -10,6 +10,13 @@ namespace PresentationLayer.Presenters.UserControls.Voter
         event EventHandler<AccessTypeEventArgs> VoterRegisterBtnClickEventRaised;
         event EventHandler VoterRegistrationViewReadyToShowEventRaised;
 
+        IVoterRegistrationUC GetRegisterVoterViewUC(int loggedInUserId);
         IVoterRegistrationUC GetRegisterVoterViewUC();
+
+        void SetupVoterReg(int loggedInUserId);
+
+
+        string FirstName { get; set; }
+
     }
 }

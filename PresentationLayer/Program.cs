@@ -1,6 +1,7 @@
 ﻿
 using CommonComponets;
 using DomainLayer.Models.User;
+using DomainLayer.Models.Voter;
 using InfrastructureLayer.DataAccess.Repositories.Specific;
 using PresentationLayer.Presenters;
 using PresentationLayer.Presenters.UserControls;
@@ -11,6 +12,7 @@ using PresentationLayer.Views.UserControls.Voter;
 using ServiceLayer.CommonServices;
 using ServiceLayer.Services.LoginServices;
 using ServiceLayer.Services.UserServices;
+using ServiceLayer.Services.VoterServices;
 using System;
 using System.Configuration;
 using System.Windows.Forms;
@@ -35,7 +37,11 @@ namespace PresentationLayer
             // If found, return the connection string.
             if (settings != null)
                 returnValue = settings.ConnectionString;
+            
+          //  string _connectionString = "Data Source=" +
+          //@"C:\Users\TomAppleyard\Desktop\JamesMVP\MDIS.sqlite;version = 3;";
 
+          //  returnValue = _connectionString;
             return returnValue;
         }
 
@@ -66,9 +72,12 @@ namespace PresentationLayer
                 .RegisterType<IRegisterPresenter, RegisterPresenter>(new ContainerControlledLifetimeManager())
                 .RegisterType<IRegisterUC, RegisterUC>(new ContainerControlledLifetimeManager())
 
+                .RegisterType<IVoterServices, VoterServices>(new ContainerControlledLifetimeManager())
+                .RegisterType<IVoterRepository, VoterRepository>(new InjectionConstructor(_connectionString))
 
                 .RegisterType<IRegisterVoterPresenter, RegisterVoterPresenter>(new ContainerControlledLifetimeManager())
                 .RegisterType<IVoterRegistrationUC, VoterRegistrationUC>(new ContainerControlledLifetimeManager())
+                .RegisterType<IVoterModel, VoterModel>(new ContainerControlledLifetimeManager())
 
 
                 .RegisterType<IErrorMessageView, ErrorMessageView>(new ContainerControlledLifetimeManager())
