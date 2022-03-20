@@ -126,9 +126,11 @@ namespace PresentationLayer.Presenters.UserControls
             MessageBox.Show("User Successfully logged in");
             _userLoginViewUC.ClearExistingBindings();
 
+            _userId = _loggedInUserModel.UserId;
+
+
             if (_loggedInUserModel.IsVoter)
             {
-                _userId = _loggedInUserModel.UserId;
                 _isVoter = _loggedInUserModel.IsVoter;
                 _mainView.ShowVoterButtons(_userId, new EventArgs());
 
@@ -137,7 +139,7 @@ namespace PresentationLayer.Presenters.UserControls
             else if (_loggedInUserModel.IsAdmin)
             {
                 _isAdmin = _loggedInUserModel.IsAdmin;
-                _mainView.ShowAdminButtons();
+                _mainView.ShowAdminButtons(_userId, new EventArgs());
             }
             else // Auditor
             {

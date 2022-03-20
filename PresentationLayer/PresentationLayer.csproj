@@ -115,6 +115,8 @@
     <Compile Include="Presenters\IBasePresenter.cs" />
     <Compile Include="Presenters\IMainPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
+    <Compile Include="Presenters\UserControls\Admin\ConfirmIdentityPresenter.cs" />
+    <Compile Include="Presenters\UserControls\Admin\IConfirmIdentityPresenter.cs" />
     <Compile Include="Presenters\UserControls\ILoginPresenter.cs" />
     <Compile Include="Presenters\UserControls\IRegisterPresenter.cs" />
     <Compile Include="Presenters\UserControls\LoginPresenter.cs" />
@@ -142,6 +144,13 @@
     <Compile Include="Views\MainView.Designer.cs">
       <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\Admin\ConfirmIdentitiesUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\Admin\ConfirmIdentitiesUC.Designer.cs">
+      <DependentUpon>ConfirmIdentitiesUC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Admin\IConfirmIdentitiesUC.cs" />
     <Compile Include="Views\UserControls\BaseUserControUC.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -176,6 +185,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\Admin\ConfirmIdentitiesUC.resx">
+      <DependentUpon>ConfirmIdentitiesUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\BaseUserControUC.resx">
       <DependentUpon>BaseUserControUC.cs</DependentUpon>

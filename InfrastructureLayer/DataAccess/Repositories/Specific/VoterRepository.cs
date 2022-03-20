@@ -154,8 +154,6 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
                 }
                 sqlLiteConnection.Close();
             }
-
-
         }
         private bool UserExistsCheck(SQLiteCommand cmd, int loggedInUserId, TypeOfExistenceCheck typeOfExistenceCheck, RequestType requestType)
         {

@@ -11,6 +11,7 @@ namespace PresentationLayer.Views
         event EventHandler LoginMenuBtnClickEventRaised;
         event EventHandler RegisterMenuBtnClickEventRaised;
         event EventHandler RegisterVoterMenuBtnClickEventRaised;
+        event EventHandler ConfirmIdentityMenuBtnClickEventRaised;
 
         event EventHandler LoggedInSuccessfullyEventRaised;
 
@@ -22,7 +23,7 @@ namespace PresentationLayer.Views
         void ResetUserControlPanelSizeandLocation();
 
         void ShowVoterButtons(int id, EventArgs e);
-        void ShowAdminButtons();
+        void ShowAdminButtons(int id, EventArgs e);
         void ShowAuditorButtons();
 
     }

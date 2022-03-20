@@ -24,5 +24,6 @@ namespace DomainLayer.Models.User
         public bool IsAdmin { get; set; }
         public bool IsAuditor { get; set; }
 
+
     }
 }

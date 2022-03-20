@@ -13,6 +13,7 @@ namespace PresentationLayer.Views
         public event EventHandler LoginMenuBtnClickEventRaised;
         public event EventHandler RegisterMenuBtnClickEventRaised;
         public event EventHandler RegisterVoterMenuBtnClickEventRaised;
+        public event EventHandler ConfirmIdentityMenuBtnClickEventRaised;
 
         public event EventHandler LoggedInSuccessfullyEventRaised;
 
@@ -74,17 +75,15 @@ namespace PresentationLayer.Views
 
         }
 
-        public void ShowVoterButtonsEvent(EventArgs e)
-        {
-            EventHelpers.RaiseEvent(this, LoggedInSuccessfullyEventRaised, e);
-
-        }
 
 
-        public void ShowAdminButtons()
+        public void ShowAdminButtons(int userId, EventArgs e)
         {
             ButtonHelper.HideAllButtons(NavigationButtonList);
             ButtonHelper.SetVisibilityOfButtons(AdminButtonList);
+
+            EventHelpers.RaiseEvent(this, LoggedInSuccessfullyEventRaised, e);
+
             // raise event
         }
 
@@ -145,6 +144,15 @@ namespace PresentationLayer.Views
         }
 
 
+        private void ConfirmIdentitiesButton_Click(object sender, EventArgs e)
+        {
+            EventHelpers.RaiseEvent(this, ConfirmIdentityMenuBtnClickEventRaised, e);
+
+            ButtonHelper.SetUnderlinePosition(ConfirmIdentitiesButton, underlineLabel);
+
+        }
+
+
         private void moreOptionsPictureBox_Click(object sender, EventArgs e)
         {
         }
@@ -159,6 +167,14 @@ namespace PresentationLayer.Views
 
         }
 
+        private void LogOutBtn_Click(object sender, EventArgs e)
+        {
 
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CommonComponets;
 using PresentationLayer.Presenters.UserControls;
+using PresentationLayer.Presenters.UserControls.Admin;
 using PresentationLayer.Presenters.UserControls.Voter;
 using PresentationLayer.Views;
 using PresentationLayer.Views.UserControls;
@@ -20,6 +21,7 @@ namespace PresentationLayer.Presenters
         private ILoginPresenter _userLoginPresenter;
         private IRegisterPresenter _userRegisterPresenter;
         private IRegisterVoterPresenter _voterRegistrationPresenter;
+        private IConfirmIdentityPresenter _confirmIdentityPresenter;
 
 
         private List<UserControl> _userControList;
@@ -32,7 +34,7 @@ namespace PresentationLayer.Presenters
 
         }
 
-        public MainPresenter(IMainView mainView, IRegisterPresenter registerPresenter, IRegisterVoterPresenter registerVoterPresenter, ILoginPresenter loginPresenter, IErrorMessageView errorMessageView) : base(errorMessageView)
+        public MainPresenter(IMainView mainView, IConfirmIdentityPresenter confirmIdentityPresenter, IRegisterPresenter registerPresenter, IRegisterVoterPresenter registerVoterPresenter, ILoginPresenter loginPresenter, IErrorMessageView errorMessageView) : base(errorMessageView)
         {
             _mainView = mainView;
             _userControlPanel = _mainView.GetUserControlPanel();
@@ -40,6 +42,7 @@ namespace PresentationLayer.Presenters
             _userLoginPresenter = loginPresenter;
             _userRegisterPresenter = registerPresenter;
             _voterRegistrationPresenter = registerVoterPresenter;
+            _confirmIdentityPresenter = confirmIdentityPresenter;
             SubscribeToEventsSetup();
         }
 
@@ -50,6 +53,7 @@ namespace PresentationLayer.Presenters
             _mainView.LoginMenuBtnClickEventRaised += new EventHandler(OnUserLoginBtnClickEventRaised);
             _mainView.RegisterMenuBtnClickEventRaised += new EventHandler(OnUserRegisterBtnClickEventRaised);
             _mainView.RegisterVoterMenuBtnClickEventRaised += new EventHandler(OnVoterRegisterBtnClickEventRaised);
+            _mainView.ConfirmIdentityMenuBtnClickEventRaised += new EventHandler(OnConfirmIdentityMenuBtnClickEventRaised);
 
 
             _mainView.MainViewLoadedEventRaised += new EventHandler(OnMainViewLoadedEventRaised);
@@ -64,10 +68,12 @@ namespace PresentationLayer.Presenters
             _userControList.Add((UserControl)_userLoginPresenter.GetLoginUserViewUC());
             _userControList.Add((UserControl)_userRegisterPresenter.GetRegisterUserViewUC());
             _userControList.Add((UserControl)_voterRegistrationPresenter.GetRegisterVoterViewUC());
+            _userControList.Add((UserControl)_confirmIdentityPresenter.GetConfirmIdentityViewUC());
 
             AssignUserControlToMainViewPanel((BaseUserControUC)_userLoginPresenter.GetLoginUserViewUC());
             AssignUserControlToMainViewPanel((BaseUserControUC)_userRegisterPresenter.GetRegisterUserViewUC());
             AssignUserControlToMainViewPanel((BaseUserControUC)_voterRegistrationPresenter.GetRegisterVoterViewUC());
+            AssignUserControlToMainViewPanel((BaseUserControUC)_confirmIdentityPresenter.GetConfirmIdentityViewUC());
 
 
             _userLoginPresenter.SetupUserForLogin();
@@ -96,16 +102,45 @@ namespace PresentationLayer.Presenters
 
             SetUserControlVisibleInPanel((UserControl)_voterRegistrationPresenter.GetRegisterVoterViewUC(u));
         }
-  
 
-        public void OnLogInSuccessEventRaised(object sender, System.EventArgs e)
+        public void OnConfirmIdentityMenuBtnClickEventRaised(object sender, System.EventArgs e)
         {
-            // SETR UP, pass in id?
             int u = _userLoginPresenter.UserId;
 
             _voterRegistrationPresenter.SetupVoterReg(u);
 
             SetUserControlVisibleInPanel((UserControl)_voterRegistrationPresenter.GetRegisterVoterViewUC(u));
+        }
+
+        
+
+
+        public void OnLogInSuccessEventRaised(object sender, System.EventArgs e)
+        {
+            // SETR UP, pass in id?
+            int u = _userLoginPresenter.UserId;
+            bool isVoter = _userLoginPresenter.IsVoter;
+            bool isAdmin = _userLoginPresenter.IsAdmin;
+            bool isAuditor = _userLoginPresenter.IsAuditor;
+
+            if (isVoter)
+            {
+                _voterRegistrationPresenter.SetupVoterReg(u);
+                SetUserControlVisibleInPanel((UserControl)_voterRegistrationPresenter.GetRegisterVoterViewUC(u));
+
+            }
+            if (isAdmin)
+            {
+                _confirmIdentityPresenter.LoadAllVotersFromDbToGrid();
+                SetUserControlVisibleInPanel((UserControl)_confirmIdentityPresenter.GetConfirmIdentityViewUC());
+
+            }
+            if (isAuditor)
+            {
+
+            }
+
+
         }
 
         private void AssignUserControlToMainViewPanel(BaseUserControUC baseUserControl)

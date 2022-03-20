@@ -10,5 +10,6 @@
         string LastName { get; set; }
         string NationalInsurance { get; set; }
         string Postcode { get; set; }
+        bool VoterIdentityConfirmed { get; set; }
     }
 }

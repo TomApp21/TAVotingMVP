@@ -41,6 +41,8 @@ namespace DomainLayer.Models.Voter
 
         public int ElectionId { get; set; }
 
+        public bool VoterIdentityConfirmed { get; set; }
+
 
 
     }

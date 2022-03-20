@@ -45,6 +45,7 @@
     <Compile Include="Models\User\UserModel.cs" />
     <Compile Include="Models\Voter\IVoterModel.cs" />
     <Compile Include="Models\Voter\VoterModel.cs" />
+    <Compile Include="Models\Voter\VoterSelectDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

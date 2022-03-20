@@ -5,11 +5,14 @@ using DomainLayer.Models.Voter;
 using InfrastructureLayer.DataAccess.Repositories.Specific;
 using PresentationLayer.Presenters;
 using PresentationLayer.Presenters.UserControls;
+using PresentationLayer.Presenters.UserControls.Admin;
 using PresentationLayer.Presenters.UserControls.Voter;
 using PresentationLayer.Views;
 using PresentationLayer.Views.UserControls;
+using PresentationLayer.Views.UserControls.Admin;
 using PresentationLayer.Views.UserControls.Voter;
 using ServiceLayer.CommonServices;
+using ServiceLayer.Services.AdminServices;
 using ServiceLayer.Services.LoginServices;
 using ServiceLayer.Services.UserServices;
 using ServiceLayer.Services.VoterServices;
@@ -72,12 +75,23 @@ namespace PresentationLayer
                 .RegisterType<IRegisterPresenter, RegisterPresenter>(new ContainerControlledLifetimeManager())
                 .RegisterType<IRegisterUC, RegisterUC>(new ContainerControlledLifetimeManager())
 
+                                .RegisterType<IAdminServices, AdminServices>(new ContainerControlledLifetimeManager())
+                                                .RegisterType<IAdminRepository, AdminRepository>(new InjectionConstructor(_connectionString))
+
+
+
                 .RegisterType<IVoterServices, VoterServices>(new ContainerControlledLifetimeManager())
                 .RegisterType<IVoterRepository, VoterRepository>(new InjectionConstructor(_connectionString))
 
                 .RegisterType<IRegisterVoterPresenter, RegisterVoterPresenter>(new ContainerControlledLifetimeManager())
                 .RegisterType<IVoterRegistrationUC, VoterRegistrationUC>(new ContainerControlledLifetimeManager())
                 .RegisterType<IVoterModel, VoterModel>(new ContainerControlledLifetimeManager())
+
+
+
+
+                .RegisterType<IConfirmIdentityPresenter, ConfirmIdentityPresenter>(new ContainerControlledLifetimeManager())
+                .RegisterType<IConfirmIdentitiesUC, ConfirmIdentitiesUC>(new ContainerControlledLifetimeManager())
 
 
                 .RegisterType<IErrorMessageView, ErrorMessageView>(new ContainerControlledLifetimeManager())
