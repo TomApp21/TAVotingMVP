@@ -22,6 +22,7 @@ namespace PresentationLayer.Presenters
         private IRegisterPresenter _userRegisterPresenter;
         private IRegisterVoterPresenter _voterRegistrationPresenter;
         private IConfirmIdentityPresenter _confirmIdentityPresenter;
+        private ICreateElectionPresenter _createElectionPresenter;
 
 
         private List<UserControl> _userControList;
@@ -34,7 +35,7 @@ namespace PresentationLayer.Presenters
 
         }
 
-        public MainPresenter(IMainView mainView, IConfirmIdentityPresenter confirmIdentityPresenter, IRegisterPresenter registerPresenter, IRegisterVoterPresenter registerVoterPresenter, ILoginPresenter loginPresenter, IErrorMessageView errorMessageView) : base(errorMessageView)
+        public MainPresenter(IMainView mainView, ICreateElectionPresenter createElectionPresenter, IConfirmIdentityPresenter confirmIdentityPresenter, IRegisterPresenter registerPresenter, IRegisterVoterPresenter registerVoterPresenter, ILoginPresenter loginPresenter, IErrorMessageView errorMessageView) : base(errorMessageView)
         {
             _mainView = mainView;
             _userControlPanel = _mainView.GetUserControlPanel();
@@ -43,6 +44,7 @@ namespace PresentationLayer.Presenters
             _userRegisterPresenter = registerPresenter;
             _voterRegistrationPresenter = registerVoterPresenter;
             _confirmIdentityPresenter = confirmIdentityPresenter;
+            _createElectionPresenter = createElectionPresenter;
             SubscribeToEventsSetup();
         }
 
@@ -54,6 +56,8 @@ namespace PresentationLayer.Presenters
             _mainView.RegisterMenuBtnClickEventRaised += new EventHandler(OnUserRegisterBtnClickEventRaised);
             _mainView.RegisterVoterMenuBtnClickEventRaised += new EventHandler(OnVoterRegisterBtnClickEventRaised);
             _mainView.ConfirmIdentityMenuBtnClickEventRaised += new EventHandler(OnConfirmIdentityMenuBtnClickEventRaised);
+            _mainView.CreateElectionMenuBtnClickEventRaised += new EventHandler(OnCreateElectionMenuBtnClickEventRaised);
+
 
 
             _mainView.MainViewLoadedEventRaised += new EventHandler(OnMainViewLoadedEventRaised);
@@ -74,6 +78,9 @@ namespace PresentationLayer.Presenters
             AssignUserControlToMainViewPanel((BaseUserControUC)_userRegisterPresenter.GetRegisterUserViewUC());
             AssignUserControlToMainViewPanel((BaseUserControUC)_voterRegistrationPresenter.GetRegisterVoterViewUC());
             AssignUserControlToMainViewPanel((BaseUserControUC)_confirmIdentityPresenter.GetConfirmIdentityViewUC());
+            AssignUserControlToMainViewPanel((BaseUserControUC)_createElectionPresenter.GetCreateElectionViewUC());
+
+
 
 
             _userLoginPresenter.SetupUserForLogin();
@@ -105,14 +112,17 @@ namespace PresentationLayer.Presenters
 
         public void OnConfirmIdentityMenuBtnClickEventRaised(object sender, System.EventArgs e)
         {
-            int u = _userLoginPresenter.UserId;
-
-            _voterRegistrationPresenter.SetupVoterReg(u);
-
-            SetUserControlVisibleInPanel((UserControl)_voterRegistrationPresenter.GetRegisterVoterViewUC(u));
+            SetUserControlVisibleInPanel((UserControl)_confirmIdentityPresenter.GetConfirmIdentityViewUC());
         }
 
-        
+        public void OnCreateElectionMenuBtnClickEventRaised(object sender, System.EventArgs e)
+        {
+            _createElectionPresenter.SetupCreateElectionViewForAdd();
+            SetUserControlVisibleInPanel((UserControl)_createElectionPresenter.GetCreateElectionViewUC());
+        }
+
+
+
 
 
         public void OnLogInSuccessEventRaised(object sender, System.EventArgs e)

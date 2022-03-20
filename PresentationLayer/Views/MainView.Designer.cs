@@ -60,7 +60,7 @@
             this.userControlPanel.BackColor = System.Drawing.Color.White;
             this.userControlPanel.Location = new System.Drawing.Point(1, 138);
             this.userControlPanel.Name = "userControlPanel";
-            this.userControlPanel.Size = new System.Drawing.Size(584, 336);
+            this.userControlPanel.Size = new System.Drawing.Size(697, 336);
             this.userControlPanel.TabIndex = 0;
             // 
             // underlineLabel
@@ -105,7 +105,7 @@
             this.gardenPictureBox.Image = global::PresentationLayer.Properties.Resources.rsz_1denny_muller_jyrti3loqnc_unsplash;
             this.gardenPictureBox.Location = new System.Drawing.Point(0, 0);
             this.gardenPictureBox.Name = "gardenPictureBox";
-            this.gardenPictureBox.Size = new System.Drawing.Size(585, 92);
+            this.gardenPictureBox.Size = new System.Drawing.Size(698, 92);
             this.gardenPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.gardenPictureBox.TabIndex = 10;
             this.gardenPictureBox.TabStop = false;
@@ -140,7 +140,7 @@
             this.label1.BackColor = System.Drawing.Color.MidnightBlue;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label1.Location = new System.Drawing.Point(482, 67);
+            this.label1.Location = new System.Drawing.Point(593, 67);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(98, 20);
             this.label1.TabIndex = 13;
@@ -235,11 +235,12 @@
             this.CreateElectionBtn.Text = "Create Election";
             this.CreateElectionBtn.UseVisualStyleBackColor = true;
             this.CreateElectionBtn.Visible = false;
+            this.CreateElectionBtn.Click += new System.EventHandler(this.CreateElectionBtn_Click);
             // 
             // LogOutBtn
             // 
             this.LogOutBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogOutBtn.Location = new System.Drawing.Point(438, 12);
+            this.LogOutBtn.Location = new System.Drawing.Point(549, 12);
             this.LogOutBtn.Name = "LogOutBtn";
             this.LogOutBtn.Size = new System.Drawing.Size(135, 23);
             this.LogOutBtn.TabIndex = 20;
@@ -252,7 +253,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(585, 473);
+            this.ClientSize = new System.Drawing.Size(698, 473);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.LogOutBtn);
             this.Controls.Add(this.label1);

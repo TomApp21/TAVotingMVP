@@ -1,4 +1,5 @@
-﻿using DomainLayer.Models.Voter;
+﻿using DomainLayer.Models.Election;
+using DomainLayer.Models.Voter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,9 @@ namespace ServiceLayer.Services.AdminServices
     public interface IAdminRepository
     {
         IEnumerable<IVoterModel> GetAll();
-        void ConfirmVoterIdentity(IVoterModel voterModel, bool identityConfirmed);
+        void ConfirmVoterIdentity(VoterSelectDto voterModel, bool identityConfirmed);
+        void AddElection(IElectionModel electionModel);
+
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using CommonComponents;
+using CommonComponets;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,13 +14,26 @@ namespace PresentationLayer.Views.UserControls.Admin
 {
     public partial class ConfirmIdentitiesUC : BaseUserControUC, IConfirmIdentitiesUC
     {
+
+        private AccessTypeEventArgs _accessTypeEventArgs;
+
+        public AccessTypeEventArgs AccessTypeEventArgs
+        {
+            get { return _accessTypeEventArgs; }
+            set
+            {
+                if (value == _accessTypeEventArgs) return;
+                _accessTypeEventArgs = value;
+            }
+        }
+
         public ConfirmIdentitiesUC()
         {
             InitializeComponent();
         }
         public event EventHandler ConIdentityListViewLoadEventRaised;
-        public event EventHandler DenyIdentityListMenuClickEventRaised;
-        public event EventHandler ApproveIdentityListMenuClickEventRaised;
+        public event EventHandler<AccessTypeEventArgs> DenyIdentityListMenuClickEventRaised;
+        public event EventHandler<AccessTypeEventArgs> ApproveIdentityListMenuClickEventRaised;
 
         const int columnForGridButton = 9;
 
@@ -35,8 +49,11 @@ namespace PresentationLayer.Views.UserControls.Admin
             this.ConfirmIdentitiesListDataGridView.DataSource = confirmIdentitiesListBindingSource;
         }
 
-        public void LoadConIdentityListToGrid(BindingSource departmentListBindingSource, Dictionary<string, string> headingsDictionary, Dictionary<string, float> gridColumnWidthsDictionary, int rowHeight)
+        public void LoadConIdentityListToGrid(BindingSource departmentListBindingSource, Dictionary<string, string> headingsDictionary, Dictionary<string, float> gridColumnWidthsDictionary, int rowHeight, AccessTypeEventArgs accessTypeEventArgs)
         {
+            _accessTypeEventArgs = accessTypeEventArgs;
+
+
             this.ConfirmIdentitiesListDataGridView.RowTemplate.Height = 32;
 
             this.ConfirmIdentitiesListDataGridView.DataSource = departmentListBindingSource;
@@ -112,21 +129,21 @@ namespace PresentationLayer.Views.UserControls.Admin
 
         private void approveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OnApproveSelectedIdentityInGridMenuClick(sender, e);
+            OnApproveSelectedIdentityInGridMenuClick(sender, (AccessTypeEventArgs)_accessTypeEventArgs);
         }
 
         private void denyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OnDenySelectedIdentityInGridMenuClick(sender, e);
+            OnDenySelectedIdentityInGridMenuClick(sender, (AccessTypeEventArgs)_accessTypeEventArgs);
         }
 
-        private void OnApproveSelectedIdentityInGridMenuClick(object sender, EventArgs e)
+        private void OnApproveSelectedIdentityInGridMenuClick(object sender, AccessTypeEventArgs accessTypeEventArgs)
         {
-            EventHelpers.RaiseEvent(this, ApproveIdentityListMenuClickEventRaised, e);
+            EventHelpers.RaiseEvent(this, ApproveIdentityListMenuClickEventRaised, accessTypeEventArgs);
         }
-        private void OnDenySelectedIdentityInGridMenuClick(object sender, EventArgs e)
+        private void OnDenySelectedIdentityInGridMenuClick(object sender, AccessTypeEventArgs accessTypeEventArgs)
         {
-            EventHelpers.RaiseEvent(this, DenyIdentityListMenuClickEventRaised, e);
+            EventHelpers.RaiseEvent(this, DenyIdentityListMenuClickEventRaised, accessTypeEventArgs);
         }
 
 

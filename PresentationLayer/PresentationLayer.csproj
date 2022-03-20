@@ -117,10 +117,12 @@
     <Compile Include="Presenters\MainPresenter.cs" />
     <Compile Include="Presenters\UserControls\Admin\ConfirmIdentityPresenter.cs" />
     <Compile Include="Presenters\UserControls\Admin\IConfirmIdentityPresenter.cs" />
+    <Compile Include="Presenters\UserControls\Admin\ICreateElectionPresenter.cs" />
     <Compile Include="Presenters\UserControls\ILoginPresenter.cs" />
     <Compile Include="Presenters\UserControls\IRegisterPresenter.cs" />
     <Compile Include="Presenters\UserControls\LoginPresenter.cs" />
     <Compile Include="Presenters\UserControls\RegisterPresenter.cs" />
+    <Compile Include="Presenters\UserControls\Admin\CreateElectionPresenter.cs" />
     <Compile Include="Presenters\UserControls\Voter\IRegisterVoterPresenter.cs" />
     <Compile Include="Presenters\UserControls\Voter\RegisterVoterPresenter.cs" />
     <Compile Include="Program.cs" />
@@ -150,7 +152,14 @@
     <Compile Include="Views\UserControls\Admin\ConfirmIdentitiesUC.Designer.cs">
       <DependentUpon>ConfirmIdentitiesUC.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\Admin\CreateElectionViewUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\Admin\CreateElectionViewUC.Designer.cs">
+      <DependentUpon>CreateElectionViewUC.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\Admin\IConfirmIdentitiesUC.cs" />
+    <Compile Include="Views\UserControls\Admin\ICreateElectionViewUC.cs" />
     <Compile Include="Views\UserControls\BaseUserControUC.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -188,6 +197,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\Admin\ConfirmIdentitiesUC.resx">
       <DependentUpon>ConfirmIdentitiesUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\Admin\CreateElectionViewUC.resx">
+      <DependentUpon>CreateElectionViewUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\BaseUserControUC.resx">
       <DependentUpon>BaseUserControUC.cs</DependentUpon>

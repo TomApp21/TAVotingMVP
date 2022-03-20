@@ -1,5 +1,6 @@
 ﻿
 using CommonComponets;
+using DomainLayer.Models.Election;
 using DomainLayer.Models.User;
 using DomainLayer.Models.Voter;
 using InfrastructureLayer.DataAccess.Repositories.Specific;
@@ -75,17 +76,24 @@ namespace PresentationLayer
                 .RegisterType<IRegisterPresenter, RegisterPresenter>(new ContainerControlledLifetimeManager())
                 .RegisterType<IRegisterUC, RegisterUC>(new ContainerControlledLifetimeManager())
 
-                                .RegisterType<IAdminServices, AdminServices>(new ContainerControlledLifetimeManager())
-                                                .RegisterType<IAdminRepository, AdminRepository>(new InjectionConstructor(_connectionString))
+                .RegisterType<IAdminServices, AdminServices>(new ContainerControlledLifetimeManager())
+                .RegisterType<IAdminRepository, AdminRepository>(new InjectionConstructor(_connectionString))
 
 
 
                 .RegisterType<IVoterServices, VoterServices>(new ContainerControlledLifetimeManager())
                 .RegisterType<IVoterRepository, VoterRepository>(new InjectionConstructor(_connectionString))
 
+
+
                 .RegisterType<IRegisterVoterPresenter, RegisterVoterPresenter>(new ContainerControlledLifetimeManager())
                 .RegisterType<IVoterRegistrationUC, VoterRegistrationUC>(new ContainerControlledLifetimeManager())
                 .RegisterType<IVoterModel, VoterModel>(new ContainerControlledLifetimeManager())
+
+
+                .RegisterType<ICreateElectionPresenter, CreateElectionPresenter>(new ContainerControlledLifetimeManager())
+                .RegisterType<ICreateElectionViewUC, CreateElectionViewUC>(new ContainerControlledLifetimeManager())
+                                .RegisterType<IElectionModel, ElectionModel>(new ContainerControlledLifetimeManager())
 
 
 

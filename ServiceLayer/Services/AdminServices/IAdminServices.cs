@@ -1,4 +1,5 @@
-﻿using DomainLayer.Models.Voter;
+﻿using DomainLayer.Models.Election;
+using DomainLayer.Models.Voter;
 using System.Collections.Generic;
 
 namespace ServiceLayer.Services.AdminServices
@@ -8,7 +9,9 @@ namespace ServiceLayer.Services.AdminServices
     {
         IEnumerable<IVoterModel> GetAll();
         //VoterModel GetById(int id);
-        List<VoterModel> GetDepartmentSelectList();
-        void UpdateConfirmIdentity(IVoterModel voterModel, bool identityConfirmed);
+        List<VoterSelectDto> GetVoterSelectList();
+        void UpdateConfirmIdentity(VoterSelectDto voterModel, bool identityConfirmed);
+        void AddElection(IElectionModel electionModel);
+
     }
 }

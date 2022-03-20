@@ -1,5 +1,6 @@
 ﻿using CommonComponents;
 using CommonComponets;
+using DomainLayer.Models.Election;
 using DomainLayer.Models.Voter;
 using ServiceLayer.Services.AdminServices;
 using System;
@@ -64,7 +65,7 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
             }
         }
 
-        public void ConfirmVoterIdentity(IVoterModel voterModel, bool identityConfirmed)
+        public void ConfirmVoterIdentity(VoterSelectDto voterModel, bool identityConfirmed)
         {
             int result = -1;
             DataAccessStatus dataAccessStatus = new DataAccessStatus();
@@ -84,13 +85,13 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
 
                 string updateSql =
                        "UPDATE Users "
-                     + "SET IdentityConfirmed = @IdentityConfirmed "
+                     + "SET VoterIdentityConfirmed = @IdentityConfirmed "
                      + "WHERE FirstName = @FirstName "
-                     + "AND LastName = @LastName, "
-                     + "AND DateOfBirth = @DateOfBirth, "
-                     + "AND AddressLine1 = @AddressLine1, "
-                     + "AND AddressLine2 = @AddressLine2, "
-                     + "AND Postcode = @Postcode, "
+                     + "AND LastName = @LastName "
+                     + "AND DateOfBirth = @DateOfBirth "
+                     + "AND AddressLine1 = @AddressLine1 "
+                     + "AND AddressLine2 = @AddressLine2 "
+                     + "AND Postcode = @Postcode "
                      + "AND NationalInsurance = @NationalInsurance";
 
 
@@ -136,6 +137,125 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
             }
         }
 
+        /// <summary>
+        /// Add
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <exception cref="DataAccessException"></exception>
+        public void AddElection(IElectionModel electionModel)
+        {
+            DataAccessStatus dataAccessStatus = new DataAccessStatus();
+
+            using (SQLiteConnection sqlLiteConnection = new SQLiteConnection(_connectionString))
+            {
+                try
+                {
+                    sqlLiteConnection.Open();
+                }
+                catch (SQLiteException e)
+                {
+                    dataAccessStatus.setValues(status: "Error", operationSucceeded: false, exceptionMessage: e.Message, customMessage: "Unable to add UserModel. Could not open a database connection", helpLink: e.HelpLink, errorCode: e.ErrorCode, stackTrace: e.StackTrace);
+
+                    throw new DataAccessException(e.Message, e.InnerException, dataAccessStatus);
+                }
+
+                string SqlText =
+                       "INSERT INTO Election (ElectionName, StartDate, EndDate) " +
+                       "VALUES (@ElectionName, @StartDate, @EndDate) ";
+
+                using (SQLiteCommand cmd = new SQLiteCommand(sqlLiteConnection))
+                {
+                    try
+                    {
+                        ElectionExistsCheck(cmd, electionModel, TypeOfExistenceCheck.DoesNotExistInDB, RequestType.Add);
+                    }
+                    catch (DataAccessException ex)
+                    {
+                        ex.DataAccessStatusInfo.CustomMessage = "Election model could not be added because it is already in the database.";
+                        ex.DataAccessStatusInfo.ExceptionMessage = string.Copy(ex.Message);
+                        ex.DataAccessStatusInfo.StackTrace = string.Copy(ex.StackTrace);
+                        throw ex;
+                    }
+
+                    cmd.CommandText = SqlText;
+
+                    cmd.Prepare();
+                    cmd.Parameters.AddWithValue("@ElectionName", electionModel.ElectionName);
+                    cmd.Parameters.AddWithValue("@StartDate", electionModel.StartDate);
+                    cmd.Parameters.AddWithValue("@EndDate", electionModel.EndDate);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (SQLiteException e)
+                    {
+                        dataAccessStatus.setValues(status: "Error", operationSucceeded: false, exceptionMessage: e.Message, customMessage: "Unable to register User Model", helpLink: e.HelpLink, errorCode: e.ErrorCode, stackTrace: e.StackTrace);
+
+                        throw new DataAccessException(e.Message, e.InnerException, dataAccessStatus);
+                    }
+
+
+                    try //Confirm the User Model was added to the database
+                    {
+                        ElectionExistsCheck(cmd, electionModel, TypeOfExistenceCheck.DoesExistInDB, RequestType.ConfirmAdd);
+                    }
+                    catch (DataAccessException ex)
+                    {
+                        ex.DataAccessStatusInfo.Status = "Error";
+                        ex.DataAccessStatusInfo.OperationSucceeded = false;
+                        ex.DataAccessStatusInfo.CustomMessage = "Failed to find election model in database after add operation completed.";
+                        ex.DataAccessStatusInfo.ExceptionMessage = string.Copy(ex.Message);
+                        ex.DataAccessStatusInfo.StackTrace = string.Copy(ex.StackTrace);
+
+                        throw ex;
+                    }
+                    sqlLiteConnection.Close();
+                }
+            }
+        }
+
+        private bool ElectionExistsCheck(SQLiteCommand cmd, IElectionModel electionModel, TypeOfExistenceCheck typeOfExistenceCheck, RequestType requestType)
+        {
+            Int32 countOfRecsFound = 0;
+            bool RecordExistsCheckPassed = true;
+
+            DataAccessStatus dataAccessStatus = new DataAccessStatus();
+
+            cmd.Prepare();
+
+            if ((requestType == RequestType.Add) || (requestType == RequestType.ConfirmAdd))
+            {
+                cmd.CommandText = "Select count(*) from Elections where ElectionName=@ElectionName";
+                cmd.Parameters.AddWithValue("@ElectionName", electionModel.ElectionName);
+            }
+
+
+            try
+            {
+                countOfRecsFound = Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            catch (SQLiteException e)
+            {
+                string msg = e.Message;
+                throw;
+            }
+
+            if ((typeOfExistenceCheck == TypeOfExistenceCheck.DoesNotExistInDB) && (countOfRecsFound > 0))
+            {
+                dataAccessStatus.Status = "Error";
+                RecordExistsCheckPassed = false;
+
+                throw new DataAccessException(dataAccessStatus);
+            }
+            else if ((typeOfExistenceCheck == TypeOfExistenceCheck.DoesExistInDB) && (countOfRecsFound == 0))
+            {
+                dataAccessStatus.Status = "Error";
+                RecordExistsCheckPassed = false;
+                throw new DataAccessException(dataAccessStatus);
+            }
+            return RecordExistsCheckPassed;
+        }
 
         //public VoterModel GetById(int departmentId)
         //{
@@ -267,7 +387,7 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
 
 
 
-        private bool RecordExistsCheck(SQLiteCommand cmd, IVoterModel voterModel, TypeOfExistenceCheck typeOfExistenceCheck, RequestType requestType)
+        private bool RecordExistsCheck(SQLiteCommand cmd, VoterSelectDto voterModel, TypeOfExistenceCheck typeOfExistenceCheck, RequestType requestType)
         {
             Int32 countOfRecsFound = 0;
             bool RecordExistsCheckPassed = true;
@@ -280,12 +400,12 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
             if ((requestType == RequestType.Update) || (requestType == RequestType.ConfirmDelete) || (requestType == RequestType.Delete))
             {
                 cmd.CommandText = "Select count(*) from Users " 
-                     + "WHERE FirstName = @FirstName, "
-                     + "AND LastName = @LastName, "
-                     + "AND DateOfBirth = @DateOfBirth, "
-                     + "AND AddressLine1 = @AddressLine1, "
-                     + "AND AddressLine2 = @AddressLine2, "
-                     + "AND Postcode = @Postcode, "
+                     + "WHERE FirstName = @FirstName "
+                     + "AND LastName = @LastName "
+                     + "AND DateOfBirth = @DateOfBirth "
+                     + "AND AddressLine1 = @AddressLine1 "
+                     + "AND AddressLine2 = @AddressLine2 "
+                     + "AND Postcode = @Postcode "
                      + "AND NationalInsurance = @NationalInsurance"; 
                 
 

@@ -14,6 +14,7 @@ namespace PresentationLayer.Views
         public event EventHandler RegisterMenuBtnClickEventRaised;
         public event EventHandler RegisterVoterMenuBtnClickEventRaised;
         public event EventHandler ConfirmIdentityMenuBtnClickEventRaised;
+        public event EventHandler CreateElectionMenuBtnClickEventRaised;
 
         public event EventHandler LoggedInSuccessfullyEventRaised;
 
@@ -152,6 +153,13 @@ namespace PresentationLayer.Views
 
         }
 
+        private void CreateElectionBtn_Click(object sender, EventArgs e)
+        {
+            EventHelpers.RaiseEvent(this, CreateElectionMenuBtnClickEventRaised, e);
+
+            ButtonHelper.SetUnderlinePosition(CreateElectionBtn, underlineLabel);
+        }
+
 
         private void moreOptionsPictureBox_Click(object sender, EventArgs e)
         {
@@ -176,5 +184,7 @@ namespace PresentationLayer.Views
         {
 
         }
+
+
     }
 }

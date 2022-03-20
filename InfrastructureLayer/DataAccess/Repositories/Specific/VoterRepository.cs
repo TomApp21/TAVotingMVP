@@ -1,5 +1,6 @@
 ﻿using CommonComponents;
 using CommonComponets;
+using DomainLayer.Models.Election;
 using DomainLayer.Models.Voter;
 using ServiceLayer.Services.VoterServices;
 using System;
@@ -155,6 +156,9 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
                 sqlLiteConnection.Close();
             }
         }
+
+
+
         private bool UserExistsCheck(SQLiteCommand cmd, int loggedInUserId, TypeOfExistenceCheck typeOfExistenceCheck, RequestType requestType)
         {
             Int32 countOfRecsFound = 0;
@@ -200,6 +204,8 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
             }
             return RecordExistsCheckPassed;
         }
+
+
 
 
     }

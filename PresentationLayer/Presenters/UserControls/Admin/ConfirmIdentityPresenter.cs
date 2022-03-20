@@ -1,4 +1,5 @@
-﻿using DomainLayer.Models.Voter;
+﻿using CommonComponets;
+using DomainLayer.Models.Voter;
 using PresentationLayer.Views.UserControls.Admin;
 using ServiceLayer.Services.AdminServices;
 using System;
@@ -14,6 +15,10 @@ namespace PresentationLayer.Presenters.UserControls.Admin
     internal class ConfirmIdentityPresenter : IConfirmIdentityPresenter
     {
         public event EventHandler DepartmentListYesDeleteBtnClickEventRaised;
+        public event EventHandler VoterRegistrationViewReadyToShowEventRaised;
+        public event EventHandler VoterRegClearBtnClickEventRaised;
+
+        public event EventHandler<AccessTypeEventArgs> VoterRegisterBtnClickEventRaised;
 
         private IConfirmIdentitiesUC _confirmIdentitiesViewUC;
         private IAdminServices _adminServices;
@@ -24,7 +29,7 @@ namespace PresentationLayer.Presenters.UserControls.Admin
 
         //BindingList to load with collection of DepartmentModels returned from repository
         //This list will be used to construct the BindingSource for the Views DataGridView
-        BindingList<VoterModel> _voterSelectDtoBindingList;
+        BindingList<VoterSelectDto> _voterSelectDtoBindingList;
 
         // This BindingSource binds the list to the DataGridView control.
         private BindingSource _voterSelectDtoBindingSource;
@@ -50,9 +55,9 @@ namespace PresentationLayer.Presenters.UserControls.Admin
         }
         private void SubscribeToEventsSetup()
         {
-            _confirmIdentitiesViewUC.ApproveIdentityListMenuClickEventRaised += new EventHandler(OnApproveIdentityListMenuClickEventRaised);
+            _confirmIdentitiesViewUC.ApproveIdentityListMenuClickEventRaised += new EventHandler<AccessTypeEventArgs>(OnApproveIdentityListMenuClickEventRaised);
 
-            _confirmIdentitiesViewUC.DenyIdentityListMenuClickEventRaised += new EventHandler(OnDenyIdentityListMenuClickEventRaised);
+            _confirmIdentitiesViewUC.DenyIdentityListMenuClickEventRaised += new EventHandler<AccessTypeEventArgs>(OnDenyIdentityListMenuClickEventRaised);
         }
 
         //public void OnDepartmentListYesDeleteBtnClickEventRaised(object sender, EventArgs e)
@@ -72,27 +77,33 @@ namespace PresentationLayer.Presenters.UserControls.Admin
         //    _departmentListDeleteView.ShowDepartmentListDeleteView(DepartNameToDelete);
         //}
 
-        public void OnApproveIdentityListMenuClickEventRaised(object sender, EventArgs e)
+        public void OnApproveIdentityListMenuClickEventRaised(object sender, AccessTypeEventArgs e)
         {
-            VoterModel voterSelectDto = (VoterModel)_voterSelectDtoBindingSource.Current;
+            VoterSelectDto voterSelectDto = (VoterSelectDto)_voterSelectDtoBindingSource.Current;
 
             _adminServices.UpdateConfirmIdentity(voterSelectDto, true);
+
+
+            LoadAllVotersFromDbToGrid();
             // refresh?
         }
 
-        public void OnDenyIdentityListMenuClickEventRaised(object sender, EventArgs e)
+        public void OnDenyIdentityListMenuClickEventRaised(object sender, AccessTypeEventArgs e)
         {
-            VoterModel voterSelectDto = (VoterModel)_voterSelectDtoBindingSource.Current;
+            VoterSelectDto voterSelectDto = (VoterSelectDto)_voterSelectDtoBindingSource.Current;
 
             _adminServices.UpdateConfirmIdentity(voterSelectDto, false);
+
+            LoadAllVotersFromDbToGrid();
+
         }
 
         private void BuildDatasourceForAllVotersList()
         {
-            IEnumerable<VoterModel> allVotersAwaitingConfirmation = (IEnumerable<VoterModel>)_adminServices.GetAll();
+            IEnumerable<VoterSelectDto> allVotersAwaitingConfirmation = (IEnumerable<VoterSelectDto>)_adminServices.GetVoterSelectList();
 
-            _voterSelectDtoBindingList = new BindingList<VoterModel>();
-            foreach (VoterModel votersDetails in allVotersAwaitingConfirmation)
+            _voterSelectDtoBindingList = new BindingList<VoterSelectDto>();
+            foreach (VoterSelectDto votersDetails in allVotersAwaitingConfirmation)
             {
                 _voterSelectDtoBindingList.Add(votersDetails);
             };
@@ -114,20 +125,23 @@ namespace PresentationLayer.Presenters.UserControls.Admin
             Dictionary<string, string> headingsDictionary = new Dictionary<string, string>();
             SetConIdentitiesListViewGridHeadings(headingsDictionary);
 
-            _confirmIdentitiesViewUC.LoadConIdentityListToGrid(_voterSelectDtoBindingSource, headingsDictionary, gridColumnWidthsDictionary, rowHeight);
+            AccessTypeEventArgs accessTypeEventArgs = new AccessTypeEventArgs();
+            accessTypeEventArgs.AccessTypeValue = AccessTypeEventArgs.AccessType.Update;
+
+            _confirmIdentitiesViewUC.LoadConIdentityListToGrid(_voterSelectDtoBindingSource, headingsDictionary, gridColumnWidthsDictionary, rowHeight, accessTypeEventArgs);
         }
 
         private void SetConIdentitiesListViewGridColumnWidths(Dictionary<string, float> gridColumnWidthsDictionary)
         {
             gridColumnWidthsDictionary["FirstName"] = (float)(.10);
             gridColumnWidthsDictionary["LastName"] = (float)(.10);
-            gridColumnWidthsDictionary["DateOfBirth"] = (float)(.10);
-            gridColumnWidthsDictionary["AddressLine1"] = (float)(.10);
-            gridColumnWidthsDictionary["AddressLine2"] = (float)(.10);
+            gridColumnWidthsDictionary["DateOfBirth"] = (float)(.12);
+            gridColumnWidthsDictionary["AddressLine1"] = (float)(.17);
+            gridColumnWidthsDictionary["AddressLine2"] = (float)(.17);
             gridColumnWidthsDictionary["Postcode"] = (float)(.10);
-            gridColumnWidthsDictionary["NationalInsurance"] = (float)(.10);
-            gridColumnWidthsDictionary["ElectionId"] = (float)(.10);
-            gridColumnWidthsDictionary["Options"] = (float)(.15);
+            gridColumnWidthsDictionary["NationalInsurance"] = (float)(.12);
+            gridColumnWidthsDictionary["ElectionId"] = (float)(.08);
+            gridColumnWidthsDictionary["Options"] = (float)(.08);
 
         }
 

@@ -1,4 +1,5 @@
-﻿using PresentationLayer.Views.UserControls.Admin;
+﻿using CommonComponets;
+using PresentationLayer.Views.UserControls.Admin;
 using System;
 
 namespace PresentationLayer.Presenters.UserControls.Admin
@@ -10,7 +11,7 @@ namespace PresentationLayer.Presenters.UserControls.Admin
         IConfirmIdentitiesUC GetConfirmIdentityViewUC();
         //IConfirmIdentitiesUC GetRegisterVoterViewUC(int loggedInUserId);
         void LoadAllVotersFromDbToGrid();
-        void OnApproveIdentityListMenuClickEventRaised(object sender, EventArgs e);
-        void OnDenyIdentityListMenuClickEventRaised(object sender, EventArgs e);
+        void OnApproveIdentityListMenuClickEventRaised(object sender, AccessTypeEventArgs e);
+        void OnDenyIdentityListMenuClickEventRaised(object sender, AccessTypeEventArgs e);
     }
 }

@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\Election\ElectionModel.cs" />
+    <Compile Include="Models\Election\IElectionModel.cs" />
     <Compile Include="Models\User\IUserModel.cs" />
     <Compile Include="Models\User\UserModel.cs" />
     <Compile Include="Models\Voter\IVoterModel.cs" />
