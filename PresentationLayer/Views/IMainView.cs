@@ -13,6 +13,8 @@ namespace PresentationLayer.Views
         event EventHandler RegisterVoterMenuBtnClickEventRaised;
         event EventHandler ConfirmIdentityMenuBtnClickEventRaised;
         event EventHandler CreateElectionMenuBtnClickEventRaised;
+        event EventHandler AddCandidateMenuBtnClickEventRaised;
+
 
         event EventHandler LoggedInSuccessfullyEventRaised;
 

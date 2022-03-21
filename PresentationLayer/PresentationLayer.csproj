@@ -115,7 +115,9 @@
     <Compile Include="Presenters\IBasePresenter.cs" />
     <Compile Include="Presenters\IMainPresenter.cs" />
     <Compile Include="Presenters\MainPresenter.cs" />
+    <Compile Include="Presenters\UserControls\Admin\AddCandidatePresenter.cs" />
     <Compile Include="Presenters\UserControls\Admin\ConfirmIdentityPresenter.cs" />
+    <Compile Include="Presenters\UserControls\Admin\IAddCandidatePresenter.cs" />
     <Compile Include="Presenters\UserControls\Admin\IConfirmIdentityPresenter.cs" />
     <Compile Include="Presenters\UserControls\Admin\ICreateElectionPresenter.cs" />
     <Compile Include="Presenters\UserControls\ILoginPresenter.cs" />
@@ -146,6 +148,12 @@
     <Compile Include="Views\MainView.Designer.cs">
       <DependentUpon>MainView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\Admin\AddCandidateViewUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\Admin\AddCandidateViewUC.Designer.cs">
+      <DependentUpon>AddCandidateViewUC.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControls\Admin\ConfirmIdentitiesUC.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -158,6 +166,7 @@
     <Compile Include="Views\UserControls\Admin\CreateElectionViewUC.Designer.cs">
       <DependentUpon>CreateElectionViewUC.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\Admin\IAddCandidateViewUC.cs" />
     <Compile Include="Views\UserControls\Admin\IConfirmIdentitiesUC.cs" />
     <Compile Include="Views\UserControls\Admin\ICreateElectionViewUC.cs" />
     <Compile Include="Views\UserControls\BaseUserControUC.cs">
@@ -194,6 +203,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\Admin\AddCandidateViewUC.resx">
+      <DependentUpon>AddCandidateViewUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\Admin\ConfirmIdentitiesUC.resx">
       <DependentUpon>ConfirmIdentitiesUC.cs</DependentUpon>

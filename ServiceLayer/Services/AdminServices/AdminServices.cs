@@ -100,10 +100,10 @@ namespace ServiceLayer.Services.AdminServices
             bool validEndDate = DateTime.TryParseExact(endDate, "dd/MM/yyyy", DateTimeFormatInfo.InvariantInfo, DateTimeStyles.None, out tempDate);
 
 
-            if (validStartDate)
+            if (!validStartDate)
                 errorsStringBuilder.Append("Start date must be in dd/mm/yyyy format").AppendLine();
 
-            if (validEndDate)
+            if (!validEndDate)
                 errorsStringBuilder.Append("End date must be in dd/mm/yyyy format").AppendLine();
 
             if (errorsStringBuilder.Length > 0)

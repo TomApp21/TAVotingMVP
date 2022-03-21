@@ -15,6 +15,8 @@ namespace PresentationLayer.Views
         public event EventHandler RegisterVoterMenuBtnClickEventRaised;
         public event EventHandler ConfirmIdentityMenuBtnClickEventRaised;
         public event EventHandler CreateElectionMenuBtnClickEventRaised;
+        public event EventHandler AddCandidateMenuBtnClickEventRaised;
+
 
         public event EventHandler LoggedInSuccessfullyEventRaised;
 
@@ -99,10 +101,10 @@ namespace PresentationLayer.Views
 
         private void MainView_Load(object sender, EventArgs e)
         {
-            NavigationButtonList = new List<Button>() { loginBtn, registerBtn, registerVoterButton, CastVoteButton, CreateCandidateBtn, CreateElectionBtn, ViewElectionBtn };
+            NavigationButtonList = new List<Button>() { loginBtn, registerBtn, registerVoterButton, CastVoteButton, AddCandidateBtn, CreateElectionBtn, ViewElectionBtn };
             VotersButtonList = new List<Button>() { registerVoterButton, CastVoteButton };
             LoginButtonList = new List<Button>() {loginBtn, registerBtn };
-            AdminButtonList = new List<Button>() { ConfirmIdentitiesButton, CreateCandidateBtn, CreateElectionBtn };
+            AdminButtonList = new List<Button>() { ConfirmIdentitiesButton, AddCandidateBtn, CreateElectionBtn };
             AuditorsButtonList = new List<Button>() { ViewElectionBtn };
 
             //ButtonHelper.SetGroupToBorderless(NavigationButtonList);
@@ -160,6 +162,13 @@ namespace PresentationLayer.Views
             ButtonHelper.SetUnderlinePosition(CreateElectionBtn, underlineLabel);
         }
 
+        private void AddCandidateBtn_Click(object sender, EventArgs e)
+        {
+            EventHelpers.RaiseEvent(this, AddCandidateMenuBtnClickEventRaised, e);
+
+            ButtonHelper.SetUnderlinePosition(AddCandidateBtn, underlineLabel);
+
+        }
 
         private void moreOptionsPictureBox_Click(object sender, EventArgs e)
         {

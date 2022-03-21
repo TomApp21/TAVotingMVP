@@ -160,7 +160,7 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
                 }
 
                 string SqlText =
-                       "INSERT INTO Election (ElectionName, StartDate, EndDate) " +
+                       "INSERT INTO Elections (ElectionName, StartDate, EndDate) " +
                        "VALUES (@ElectionName, @StartDate, @EndDate) ";
 
                 using (SQLiteCommand cmd = new SQLiteCommand(sqlLiteConnection))

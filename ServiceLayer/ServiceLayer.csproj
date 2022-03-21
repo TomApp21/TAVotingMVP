@@ -51,6 +51,12 @@
     <Compile Include="Services\AdminServices\AdminServices.cs" />
     <Compile Include="Services\AdminServices\IAdminRepository.cs" />
     <Compile Include="Services\AdminServices\IAdminServices.cs" />
+    <Compile Include="Services\CandidateServices.cs" />
+    <Compile Include="Services\ElectionServices.cs" />
+    <Compile Include="Services\ICandidateRepository.cs" />
+    <Compile Include="Services\ICandidateServices.cs" />
+    <Compile Include="Services\IElectionRepository.cs" />
+    <Compile Include="Services\IElectionServices.cs" />
     <Compile Include="Services\UserServices\IUserRepository.cs" />
     <Compile Include="Services\UserServices\IUserServices.cs" />
     <Compile Include="Services\UserServices\UserServices.cs" />

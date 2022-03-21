@@ -64,6 +64,8 @@
   <ItemGroup>
     <Compile Include="DataAccess\Repositories\Specific\AdminRepository.cs" />
     <Compile Include="DataAccess\Repositories\Specific\BaseSpecificRepository.cs" />
+    <Compile Include="DataAccess\Repositories\Specific\CandidateRepository.cs" />
+    <Compile Include="DataAccess\Repositories\Specific\ElectionRepository.cs" />
     <Compile Include="DataAccess\Repositories\Specific\UserRepository.cs" />
     <Compile Include="DataAccess\Repositories\Specific\VoterRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

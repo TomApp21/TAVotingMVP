@@ -35,7 +35,6 @@
             this.helpAboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.gardenPictureBox = new System.Windows.Forms.PictureBox();
             this.loginBtn = new System.Windows.Forms.Button();
             this.registerBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -43,13 +42,14 @@
             this.ViewElectionBtn = new System.Windows.Forms.Button();
             this.CastVoteButton = new System.Windows.Forms.Button();
             this.registerVoterButton = new System.Windows.Forms.Button();
-            this.CreateCandidateBtn = new System.Windows.Forms.Button();
+            this.AddCandidateBtn = new System.Windows.Forms.Button();
             this.ConfirmIdentitiesButton = new System.Windows.Forms.Button();
             this.CreateElectionBtn = new System.Windows.Forms.Button();
             this.LogOutBtn = new System.Windows.Forms.Button();
+            this.gardenPictureBox = new System.Windows.Forms.PictureBox();
             this.moreOptionsContextMenuStrip.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gardenPictureBox)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gardenPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // userControlPanel
@@ -100,16 +100,6 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // gardenPictureBox
-            // 
-            this.gardenPictureBox.Image = global::PresentationLayer.Properties.Resources.rsz_1denny_muller_jyrti3loqnc_unsplash;
-            this.gardenPictureBox.Location = new System.Drawing.Point(0, 0);
-            this.gardenPictureBox.Name = "gardenPictureBox";
-            this.gardenPictureBox.Size = new System.Drawing.Size(698, 92);
-            this.gardenPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.gardenPictureBox.TabIndex = 10;
-            this.gardenPictureBox.TabStop = false;
-            // 
             // loginBtn
             // 
             this.loginBtn.Dock = System.Windows.Forms.DockStyle.Left;
@@ -152,7 +142,7 @@
             this.panel1.Controls.Add(this.ViewElectionBtn);
             this.panel1.Controls.Add(this.CastVoteButton);
             this.panel1.Controls.Add(this.registerVoterButton);
-            this.panel1.Controls.Add(this.CreateCandidateBtn);
+            this.panel1.Controls.Add(this.AddCandidateBtn);
             this.panel1.Controls.Add(this.registerBtn);
             this.panel1.Controls.Add(this.ConfirmIdentitiesButton);
             this.panel1.Controls.Add(this.CreateElectionBtn);
@@ -199,17 +189,18 @@
             this.registerVoterButton.Visible = false;
             this.registerVoterButton.Click += new System.EventHandler(this.registerVoterButton_Click);
             // 
-            // CreateCandidateBtn
+            // AddCandidateBtn
             // 
-            this.CreateCandidateBtn.Dock = System.Windows.Forms.DockStyle.Left;
-            this.CreateCandidateBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CreateCandidateBtn.Location = new System.Drawing.Point(287, 0);
-            this.CreateCandidateBtn.Name = "CreateCandidateBtn";
-            this.CreateCandidateBtn.Size = new System.Drawing.Size(80, 39);
-            this.CreateCandidateBtn.TabIndex = 16;
-            this.CreateCandidateBtn.Text = "Create Candidate";
-            this.CreateCandidateBtn.UseVisualStyleBackColor = true;
-            this.CreateCandidateBtn.Visible = false;
+            this.AddCandidateBtn.Dock = System.Windows.Forms.DockStyle.Left;
+            this.AddCandidateBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.AddCandidateBtn.Location = new System.Drawing.Point(287, 0);
+            this.AddCandidateBtn.Name = "AddCandidateBtn";
+            this.AddCandidateBtn.Size = new System.Drawing.Size(80, 39);
+            this.AddCandidateBtn.TabIndex = 16;
+            this.AddCandidateBtn.Text = "Create Candidate";
+            this.AddCandidateBtn.UseVisualStyleBackColor = true;
+            this.AddCandidateBtn.Visible = false;
+            this.AddCandidateBtn.Click += new System.EventHandler(this.AddCandidateBtn_Click);
             // 
             // ConfirmIdentitiesButton
             // 
@@ -248,6 +239,16 @@
             this.LogOutBtn.UseVisualStyleBackColor = true;
             this.LogOutBtn.Click += new System.EventHandler(this.LogOutBtn_Click);
             // 
+            // gardenPictureBox
+            // 
+            this.gardenPictureBox.Image = global::PresentationLayer.Properties.Resources.rsz_1denny_muller_jyrti3loqnc_unsplash;
+            this.gardenPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.gardenPictureBox.Name = "gardenPictureBox";
+            this.gardenPictureBox.Size = new System.Drawing.Size(698, 92);
+            this.gardenPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.gardenPictureBox.TabIndex = 10;
+            this.gardenPictureBox.TabStop = false;
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -267,8 +268,8 @@
             this.Text = "Model View Presenter Demo ";
             this.Load += new System.EventHandler(this.MainView_Load);
             this.moreOptionsContextMenuStrip.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.gardenPictureBox)).EndInit();
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gardenPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -288,7 +289,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button ViewElectionBtn;
-        private System.Windows.Forms.Button CreateCandidateBtn;
+        private System.Windows.Forms.Button AddCandidateBtn;
         private System.Windows.Forms.Button ConfirmIdentitiesButton;
         private System.Windows.Forms.Button registerVoterButton;
         private System.Windows.Forms.Button CastVoteButton;
