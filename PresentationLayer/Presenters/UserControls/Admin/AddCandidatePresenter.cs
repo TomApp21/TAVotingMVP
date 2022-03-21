@@ -30,9 +30,18 @@ namespace PresentationLayer.Presenters.UserControls.Admin
 
         // Fields recreated here from User Model to be databound to the View
         private string _candidateName;
+        private string _electionName;
         private int _electionId;
 
-        public List<IElectionModel> elections = new List<IElectionModel>();
+        private IList<ElectionModel> _elections;
+        private ElectionModel _selectedElection;
+
+        BindingList<ElectionModel> _electionSelectDtoBindingList;
+
+        // This BindingSource binds the list to the DataGridView control.
+        private BindingSource _electionSelectDtoBindingSource;
+
+        //public List<IElectionModel> elections = new List<IElectionModel>();
 
 
         public IAddCandidateViewUC GetAddCandidateViewUC()
@@ -72,8 +81,24 @@ namespace PresentationLayer.Presenters.UserControls.Admin
 
         public void BuildDatasourceForEligibleElectionsList()
         {
-            IEnumerable<IElectionModel> allValidElections = _electionServices.GetAllValidElections();
-            elections = allValidElections.ToList();
+            // ==========================
+
+            IEnumerable<ElectionModel> allElections = (IEnumerable<ElectionModel>)_electionServices.GetAllValidElections();
+
+            _elections = allElections.ToList();
+
+
+
+            _electionSelectDtoBindingList = new BindingList<ElectionModel>();
+            foreach (ElectionModel electionModel in allElections)
+            {
+                _electionSelectDtoBindingList.Add(electionModel);
+            };
+
+            _electionSelectDtoBindingSource = new BindingSource();//Reset
+
+            this._electionSelectDtoBindingSource.DataSource = _electionSelectDtoBindingList;
+
         }
 
 
@@ -92,20 +117,34 @@ namespace PresentationLayer.Presenters.UserControls.Admin
 
             accessTypeEventArgs.AccessTypeValue = AccessTypeEventArgs.AccessType.Add;
 
-            _addCandidateViewUC.SetUpUserCreateCandidateView(candidateModelbindingDictionary, elections, accessTypeEventArgs);
+            _addCandidateViewUC.SetUpUserCreateCandidateView(candidateModelbindingDictionary, accessTypeEventArgs);
 
             EventHelpers.RaiseEvent(this, AddCandidateViewReadyToShowEventRaised, new EventArgs());
         }
 
-        private void SetupBindingsForView(Dictionary<string, Binding> userModelbindingDictionary)
+        private void SetupBindingsForView(Dictionary<string, Binding> candidateModelbindingDictionary)
         {
-            //Create bindings for data the View will use on its textBoxes
+            //BindingSource bindingSource = new BindingSource();
+
+            //bindingSource.DataSource = _elections.ToList();
+
+
+            //Create bindings for data the View will use on its inputs
+            Binding electionListDataSourceBinding = new Binding("DataSource", _electionSelectDtoBindingSource.DataSource, "Elections", true, DataSourceUpdateMode.OnPropertyChanged);
+            Binding electionListSelectedValueBinding = new Binding("SelectedValue", _electionSelectDtoBindingSource, "ElectionId", true, DataSourceUpdateMode.OnValidation);
+            Binding electionNameBinding = new Binding("Text", this, "ElectionName", false, DataSourceUpdateMode.OnPropertyChanged);
             Binding candidateNameBinding = new Binding("Text", this, "CandidateName", false, DataSourceUpdateMode.OnPropertyChanged);
+
             Binding electionIdBinding = new Binding("Text", this, "ElectionId", false, DataSourceUpdateMode.OnPropertyChanged);
 
             //Store bindings into a dictionary for the View to access for its textBoxes
-            userModelbindingDictionary.Add("CandidateName", candidateNameBinding);
-            userModelbindingDictionary.Add("ElectionId", electionIdBinding);
+            candidateModelbindingDictionary.Add("CandidateName", candidateNameBinding);
+            candidateModelbindingDictionary.Add("ElectionId", electionIdBinding);
+            candidateModelbindingDictionary.Add("ElectionName", electionNameBinding);
+
+            candidateModelbindingDictionary.Add("Elections", electionListDataSourceBinding);
+            candidateModelbindingDictionary.Add("SelectedValue", electionListSelectedValueBinding);
+
         }
 
         private void OnCreateCandidateBtnClickEventRaised(object sender, AccessTypeEventArgs accessTypeEventArgs)
@@ -138,12 +177,6 @@ namespace PresentationLayer.Presenters.UserControls.Admin
 
         private void OnElectionDDSelectedIndexChangedEventRaised(object sender, AccessTypeEventArgs accessTypeEventArgs)
         {
-            
-            selectedElection = (Election)dropdownElectionList.SelectedItem;
-            int id = selectedElection.ElectionId;
-
-            _candidateModelWithoutBinding.ElectionId = _electionId;
-
             EventHelpers.RaiseEvent(this, ElectionDDSelectedIndexChangedEventRaised, accessTypeEventArgs);
         }
 
@@ -151,11 +184,13 @@ namespace PresentationLayer.Presenters.UserControls.Admin
         private void InitializeValues()
         {
             _candidateName = string.Empty;
+            _electionName = string.Empty;
             _electionId = 0;
-
+            _elections = null;
 
             _candidateModelWithoutBinding.CandidateName = string.Empty;
             _candidateModelWithoutBinding.ElectionId = 0;
+            
         }
 
 
@@ -180,6 +215,18 @@ namespace PresentationLayer.Presenters.UserControls.Admin
                 NotifyPropertyChanged();
             }
         }
+
+        public string ElectionName
+        {
+            get { return this._electionName; }
+            set
+            {
+                if (value == this._electionName) return;
+                this._electionName = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         public int ElectionId
         {
             get { return this._electionId; }
@@ -191,5 +238,30 @@ namespace PresentationLayer.Presenters.UserControls.Admin
             }
         }
 
+        public IList<ElectionModel> Elections
+        {
+            get { return this._elections; }
+            set
+            {
+                if (value != this._elections)
+                {
+                    this._elections = value;
+                    NotifyPropertyChanged("Elections");
+                }
+            }
+        }
+        public ElectionModel SelectedElection
+        {
+            get { return this._selectedElection; }
+            set
+            {
+                if (value != this._selectedElection)
+                {
+                    this._selectedElection = value;
+                    NotifyPropertyChanged("SelectedElection");
+
+                }
+            }
+        }
     }
 }

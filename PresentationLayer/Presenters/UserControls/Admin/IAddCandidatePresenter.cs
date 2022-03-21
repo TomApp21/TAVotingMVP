@@ -1,6 +1,8 @@
 ﻿using CommonComponets;
+using DomainLayer.Models.Election;
 using PresentationLayer.Views.UserControls.Admin;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace PresentationLayer.Presenters.UserControls.Admin
@@ -9,6 +11,16 @@ namespace PresentationLayer.Presenters.UserControls.Admin
     {
         string CandidateName { get; set; }
         int ElectionId { get; set; }
+
+
+        string ElectionName { get;set; }
+
+
+
+
+        IList<ElectionModel> Elections { get; set; }
+
+        ElectionModel SelectedElection { get; set; }
 
         event EventHandler AddCandidateViewReadyToShowEventRaised;
         event EventHandler<AccessTypeEventArgs> CreateCandidateBtnClickEventRaised;

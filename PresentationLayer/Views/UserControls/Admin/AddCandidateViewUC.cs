@@ -53,25 +53,36 @@ namespace PresentationLayer.Views.UserControls.Admin
 
 
 
-        public void SetUpUserCreateCandidateView(Dictionary<string, Binding> bindingDictionary, List<IElectionModel> allValidElections,
+        public void SetUpUserCreateCandidateView(Dictionary<string, Binding> bindingDictionary, 
                                       AccessTypeEventArgs accessTypeEventArgs)
         {
             BindCandidateModelToView(bindingDictionary);
             _accessTypeEventArgs = accessTypeEventArgs;
 
-            this.dropdownElectionList.DataSource = null;
-            dropdownElectionList.DataSource = allValidElections;
-            dropdownElectionList.DisplayMember = "ElectionName";
-            dropdownElectionList.ValueMember = "ElectionId";
-        }
+            this.dropdownElectionList.DataSource = bindingDictionary["Elections"];
+            this.dropdownElectionList.DisplayMember = "ElectionName";
+            this.dropdownElectionList.ValueMember = "SelectedValue";
+
+            //dropdownElectionList.DataSource = bindingDicti;
+            //dropdownElectionList.DisplayMember = "ElectionName";
+            //dropdownElectionList.ValueMember = "ElectionId";
+            
+
+        
+
+    }
 
         public void BindCandidateModelToView(Dictionary<string, Binding> bindingDictionary)
         {
             ClearExistingBindings();
 
             CandidateNameTextInputUC.InputBoxDataBindings.Add(bindingDictionary["CandidateName"]);
+            dropdownElectionList.DataBindings.Add(bindingDictionary["ElectionName"]);
+            dropdownElectionList.DataBindings.Add(bindingDictionary["SelectedValue"]);
+            dropdownElectionList.DataBindings.Add(bindingDictionary["Elections"]);
 
-          
+
+
         }
 
         public void ClearExistingBindings()
@@ -85,8 +96,12 @@ namespace PresentationLayer.Views.UserControls.Admin
 
         private void dropdownElectionList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            SelectedElectionId = (int)dropdownElectionList.SelectedValue;
-           
+            //ElectionModel S = new ElectionModel();
+            
+            //S  = (ElectionModel)dropdownElectionList.SelectedValue;
+            //SelectedElectionId = S.ElectionId;
+
+
             _accessTypeEventArgs.AccessTypeValue = AccessTypeEventArgs.AccessType.Read;
 
             EventHelpers.RaiseEvent(this, ElectionDDSelectedIndexChangedEventRaised, (AccessTypeEventArgs)_accessTypeEventArgs);
