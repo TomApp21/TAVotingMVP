@@ -1,4 +1,5 @@
 ﻿using CommonComponets;
+using DomainLayer.Models.Election;
 using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
@@ -14,8 +15,10 @@ namespace PresentationLayer.Views.UserControls.Voter
 
         void BindUserModelToView(Dictionary<string, Binding> bindingDictionary);
         void ClearExistingBindings();
-        void SetUpVoterRegistrationView(Dictionary<string, Binding> bindingDictionary, AccessTypeEventArgs accessTypeEventArgs);
+        void SetUpVoterRegistrationView(Dictionary<string, Binding> bindingDictionary, IList<ElectionModel> x, AccessTypeEventArgs accessTypeEventArgs);
 
         void FormatAlreadyRegisteredView();
+
+        int SelectedElectionId { get; set; }
     }
 }

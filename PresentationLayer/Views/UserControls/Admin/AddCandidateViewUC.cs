@@ -98,7 +98,7 @@ namespace PresentationLayer.Views.UserControls.Admin
         {
             _accessTypeEventArgs.AccessTypeValue = AccessTypeEventArgs.AccessType.Add;
 
-            _selectedElectionId = (int)dropdownElectionList.SelectedValue;
+            SelectedElectionId = (int)dropdownElectionList.SelectedValue;
             
             EventHelpers.RaiseEvent(this, CreateCandidateBtnClickEventRaised, (AccessTypeEventArgs)_accessTypeEventArgs);
 

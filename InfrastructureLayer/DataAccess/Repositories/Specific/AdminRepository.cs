@@ -56,6 +56,7 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
                                 voterModel.Postcode = reader["Postcode"].ToString();
                                 voterModel.VoterIdentityConfirmed = Convert.ToBoolean(reader["VoterIdentityConfirmed"]);
                                 voterModel.NationalInsurance = reader["NationalInsurance"].ToString();
+                                voterModel.ElectionId = Convert.ToInt32(reader["ElectionId"]);
                                 
                                 voterModelList.Add(voterModel);
                             }

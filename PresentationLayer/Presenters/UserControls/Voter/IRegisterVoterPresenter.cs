@@ -18,5 +18,7 @@ namespace PresentationLayer.Presenters.UserControls.Voter
 
         string FirstName { get; set; }
 
+        int ElectionId { get; set; }
+
     }
 }

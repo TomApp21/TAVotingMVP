@@ -70,15 +70,6 @@ namespace PresentationLayer.Presenters.UserControls.Admin
             _addCandidateViewUC.ElectionDDSelectedIndexChangedEventRaised += new EventHandler<AccessTypeEventArgs>(OnElectionDDSelectedIndexChangedEventRaised);
         }
 
-
-        //private void WireUpElectionList()
-        //{
-        //    el.DataSource = null;
-        //    dropdownElectionList.DataSource = elections;
-        //    dropdownElectionList.DisplayMember = "ElectionName"; // Column Name
-        //    dropdownElectionList.ValueMember = "ElectionId";
-        //}
-
         public void BuildDatasourceForEligibleElectionsList()
         {
             // ==========================
@@ -89,15 +80,15 @@ namespace PresentationLayer.Presenters.UserControls.Admin
 
 
 
-            _electionSelectDtoBindingList = new BindingList<ElectionModel>();
-            foreach (ElectionModel electionModel in allElections)
-            {
-                _electionSelectDtoBindingList.Add(electionModel);
-            };
+            //_electionSelectDtoBindingList = new BindingList<ElectionModel>();
+            //foreach (ElectionModel electionModel in allElections)
+            //{
+            //    _electionSelectDtoBindingList.Add(electionModel);
+            //};
 
-            _electionSelectDtoBindingSource = new BindingSource();//Reset
+            //_electionSelectDtoBindingSource = new BindingSource();//Reset
 
-            this._electionSelectDtoBindingSource.DataSource = _electionSelectDtoBindingList;
+            //this._electionSelectDtoBindingSource.DataSource = _electionSelectDtoBindingList;
 
         }
 

@@ -1,5 +1,6 @@
 ﻿using CommonComponents;
 using CommonComponets;
+using DomainLayer.Models.Election;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,6 +17,7 @@ namespace PresentationLayer.Views.UserControls.Voter
     {
         private AccessTypeEventArgs _accessTypeEventArgs;
 
+        private int _selectedElectionId;
         public AccessTypeEventArgs AccessTypeEventArgs
         {
             get { return _accessTypeEventArgs; }
@@ -25,6 +27,17 @@ namespace PresentationLayer.Views.UserControls.Voter
                 _accessTypeEventArgs = value;
             }
         }
+
+        public int SelectedElectionId
+        {
+            get { return _selectedElectionId; }
+            set
+            {
+                if (value == _selectedElectionId) return;
+                _selectedElectionId = value;
+            }
+        }
+
 
         public event EventHandler<AccessTypeEventArgs> VoterRegistrationBtnClickEventRaised;
         public event EventHandler VoterRegClearBtnClickEventRaised;
@@ -37,10 +50,15 @@ namespace PresentationLayer.Views.UserControls.Voter
         }
 
         public void SetUpVoterRegistrationView(Dictionary<string, Binding> bindingDictionary,
+            IList<ElectionModel> y,
                               AccessTypeEventArgs accessTypeEventArgs)
         {
             BindUserModelToView(bindingDictionary);
             _accessTypeEventArgs = accessTypeEventArgs;
+
+            this.dropdownElectionList.DataSource = y;
+            this.dropdownElectionList.ValueMember = "ElectionId";
+            this.dropdownElectionList.DisplayMember = "ElectionName";
         }
 
         public void BindUserModelToView(Dictionary<string, Binding> bindingDictionary)
@@ -80,6 +98,9 @@ namespace PresentationLayer.Views.UserControls.Voter
 
         private void RegisterButton_Click_1(object sender, EventArgs e)
         {
+            _accessTypeEventArgs.AccessTypeValue = AccessTypeEventArgs.AccessType.Add;
+
+            _selectedElectionId = (int)dropdownElectionList.SelectedValue;
             EventHelpers.RaiseEvent(this, VoterRegistrationBtnClickEventRaised, (AccessTypeEventArgs)_accessTypeEventArgs);
 
         }

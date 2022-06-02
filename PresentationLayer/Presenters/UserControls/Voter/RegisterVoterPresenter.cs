@@ -1,8 +1,10 @@
 ﻿using CommonComponents;
 using CommonComponets;
+using DomainLayer.Models.Election;
 using DomainLayer.Models.User;
 using DomainLayer.Models.Voter;
 using PresentationLayer.Views.UserControls.Voter;
+using ServiceLayer.Services;
 using ServiceLayer.Services.LoginServices;
 using ServiceLayer.Services.VoterServices;
 using System;
@@ -26,7 +28,8 @@ namespace PresentationLayer.Presenters.UserControls.Voter
         private IVoterRegistrationUC _voterRegisterViewUC;
         private IVoterServices _voterServices;
         private IVoterModel _voterModelWithoutBinding;
-        
+        private IElectionServices _electionServices;
+
 
         private int _loggedInUserId;
 
@@ -39,6 +42,9 @@ namespace PresentationLayer.Presenters.UserControls.Voter
         private string _addrLine2;
         private string _postCode;
         private int _electionId;
+        private string _electionName;
+        private IList<ElectionModel> _elections;
+
 
         public IVoterRegistrationUC GetRegisterVoterViewUC(int loggedInUserId)
         {
@@ -53,12 +59,14 @@ namespace PresentationLayer.Presenters.UserControls.Voter
 
         public RegisterVoterPresenter(IVoterRegistrationUC voterRegistrationUC,
                                  IVoterServices voterServices,
-                                 IVoterModel voterModelWithoutBinding)
+                                 IVoterModel voterModelWithoutBinding,
+                                 IElectionServices electionServices)
 
         {
             _voterRegisterViewUC = voterRegistrationUC;
             _voterServices = voterServices;
             _voterModelWithoutBinding = voterModelWithoutBinding;
+            _electionServices = electionServices;
 
             SubscribeToEventsSetup();
         }
@@ -69,6 +77,20 @@ namespace PresentationLayer.Presenters.UserControls.Voter
 
             _voterRegisterViewUC.VoterRegClearBtnClickEventRaised += new EventHandler(OnVoterRegClearBtnClickEventRaised);
         }
+
+        public void BuildDatasourceForEligibleElectionsList()
+        {
+            // ==========================
+
+            IEnumerable<ElectionModel> allElections = (IEnumerable<ElectionModel>)_electionServices.GetAllValidElections();
+
+            _elections = allElections.ToList(); //.ToList();
+
+
+
+        }
+
+
 
         //public void SetupVoterRegForAdd(int loggedInUserId)
         //{
@@ -99,6 +121,7 @@ namespace PresentationLayer.Presenters.UserControls.Voter
 
        
             SetupBindingsForView(departmentModelbindingDictionary);
+            BuildDatasourceForEligibleElectionsList();
 
             AccessTypeEventArgs accessTypeEventArgs = new AccessTypeEventArgs();
 
@@ -108,7 +131,7 @@ namespace PresentationLayer.Presenters.UserControls.Voter
                 accessTypeEventArgs.AccessTypeValue = AccessTypeEventArgs.AccessType.Add;
 
             //Tell View to load up its DataGridView with binding objects created here
-            _voterRegisterViewUC.SetUpVoterRegistrationView(departmentModelbindingDictionary, accessTypeEventArgs);
+            _voterRegisterViewUC.SetUpVoterRegistrationView(departmentModelbindingDictionary, _elections, accessTypeEventArgs);
 
             EventHelpers.RaiseEvent(this, VoterRegistrationViewReadyToShowEventRaised, new EventArgs());
         }
@@ -148,6 +171,7 @@ namespace PresentationLayer.Presenters.UserControls.Voter
             _voterModelWithoutBinding.AddressLine2 = _addrLine2;
             _voterModelWithoutBinding.Postcode = _postCode;
             _voterModelWithoutBinding.NationalInsurance = _nationalInsurance;
+            _electionId = _voterRegisterViewUC.SelectedElectionId ;
             _voterModelWithoutBinding.ElectionId = _electionId;
 
             try
@@ -323,5 +347,38 @@ namespace PresentationLayer.Presenters.UserControls.Voter
                 NotifyPropertyChanged();
             }
         }
+
+        public string ElectionName
+        {
+            get { return this._electionName; }
+            set
+            {
+                if (value == this._electionName) return;
+                this._electionName = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public IList<ElectionModel> Elections
+        {
+            get { return this._elections; }
+            set
+            {
+                if (value != this._elections)
+                {
+                    this._elections = value;
+                    NotifyPropertyChanged("Elections");
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
     }
 }
