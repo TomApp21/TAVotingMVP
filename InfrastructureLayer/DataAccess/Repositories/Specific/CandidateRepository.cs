@@ -64,6 +64,11 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
         //}
 
 
+
+
+
+
+
         /// <summary>
         /// Add
         /// </summary>
@@ -141,6 +146,138 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
                 }
             }
         }
+
+        public void CastCandidateVote(int candidateId, int userId)
+        {
+            int result = -1;
+            DataAccessStatus dataAccessStatus = new DataAccessStatus();
+
+            using (SQLiteConnection sqlLiteConnection = new SQLiteConnection(_connectionString))
+            {
+                try
+                {
+                    sqlLiteConnection.Open();
+                }
+                catch (SQLiteException e)
+                {
+                    dataAccessStatus.setValues(status: "Error", operationSucceeded: false, exceptionMessage: e.Message, customMessage: "Unable to update/register voter. Could not open a database connection", helpLink: e.HelpLink, errorCode: e.ErrorCode, stackTrace: e.StackTrace);
+
+                    throw new DataAccessException(e.Message, e.InnerException, dataAccessStatus);
+                }
+
+                string updateSql =
+                       "UPDATE Candidates "
+                     + "SET VoteCount = VoteCount + 1 "
+                     + "WHERE CandidateId = @CandidateId";
+
+
+                using (SQLiteCommand cmd = new SQLiteCommand(sqlLiteConnection))
+                {
+
+
+                    cmd.CommandText = updateSql;
+
+                    cmd.Prepare();
+                    cmd.Parameters.AddWithValue("@CandidateId", candidateId);
+                    try
+                    {
+                        result = cmd.ExecuteNonQuery();
+                    }
+                    catch (SQLiteException e)
+                    {
+                        dataAccessStatus.setValues(status: "Error", operationSucceeded: false, exceptionMessage: String.Copy(e.Message), customMessage: "Unable to update User Model", helpLink: String.Copy(e.HelpLink), errorCode: e.ErrorCode, stackTrace: String.Copy(e.StackTrace));
+
+                        throw new DataAccessException(e.Message, e.InnerException, dataAccessStatus);
+                    }
+                }
+
+                // mark as cast vote
+                string updateSql2 =
+                       "UPDATE Users "
+                     + "SET VoteCast = 1 "
+                     + "WHERE UserId = @UserId";
+
+
+                using (SQLiteCommand cmd = new SQLiteCommand(sqlLiteConnection))
+                {
+
+
+                    cmd.CommandText = updateSql2;
+
+                    cmd.Prepare();
+                    cmd.Parameters.AddWithValue("@UserId", userId);
+                    try
+                    {
+                        result = cmd.ExecuteNonQuery();
+                    }
+                    catch (SQLiteException e)
+                    {
+                        dataAccessStatus.setValues(status: "Error", operationSucceeded: false, exceptionMessage: String.Copy(e.Message), customMessage: "Unable to update User Model", helpLink: String.Copy(e.HelpLink), errorCode: e.ErrorCode, stackTrace: String.Copy(e.StackTrace));
+
+                        throw new DataAccessException(e.Message, e.InnerException, dataAccessStatus);
+                    }
+                }
+
+
+
+
+
+
+
+
+
+                sqlLiteConnection.Close();
+            }
+        }
+
+
+
+
+
+
+        public IEnumerable<ICandidateModel> GetCandidatesForElection(int electionId)
+        {
+            List<CandidateModel> candidateModelList = new List<CandidateModel>();
+            DataAccessStatus dataAccessStatus = new DataAccessStatus();
+
+            using (SQLiteConnection sqlLiteConnection = new SQLiteConnection(_connectionString))
+            {
+                try
+                {
+                    string sql = $"SELECT * FROM Candidates Where ElectionId = {electionId}";
+
+                    sqlLiteConnection.Open();
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(sql, sqlLiteConnection))
+                    {
+                        using (SQLiteDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                CandidateModel candidateModel = new CandidateModel();
+                                candidateModel.CandidateId = Int32.Parse(reader["CandidateId"].ToString());
+                                candidateModel.CandidateName = reader["CandidateName"].ToString();
+                                candidateModel.ElectionId = Int32.Parse(reader["ElectionId"].ToString());
+                                candidateModel.VoteCount = Int32.Parse(reader["ElectionId"].ToString());
+
+                                candidateModelList.Add(candidateModel);
+                            }
+                        }
+                        sqlLiteConnection.Close();
+                    }
+                }
+                catch (SQLiteException e)
+                {
+                    dataAccessStatus.setValues(status: "Error", operationSucceeded: false, exceptionMessage: e.Message, customMessage: "Unable to get Department Model list from database", helpLink: e.HelpLink, errorCode: e.ErrorCode, stackTrace: e.StackTrace);
+
+                    throw new DataAccessException(e.Message, e.InnerException, dataAccessStatus);
+                }
+                return candidateModelList;
+            }
+        }
+
+
+
 
         private bool CandidateExistsCheck(SQLiteCommand cmd, string candidateName, TypeOfExistenceCheck typeOfExistenceCheck, RequestType requestType)
         {

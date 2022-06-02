@@ -13,7 +13,7 @@ using System.Windows.Forms;
 
 namespace PresentationLayer.Views.UserControls.Voter
 {
-    public partial class CastVoteViewUC : UserControl
+    public partial class CastVoteViewUC : BaseUserControUC, ICastVoteViewUC
     {
         public CastVoteViewUC()
         {
@@ -23,6 +23,7 @@ namespace PresentationLayer.Views.UserControls.Voter
         private AccessTypeEventArgs _accessTypeEventArgs;
 
         private int _selectedCandidateId;
+        private string _electionName;
 
         public AccessTypeEventArgs AccessTypeEventArgs
         {
@@ -44,14 +45,47 @@ namespace PresentationLayer.Views.UserControls.Voter
             }
         }
 
+        public string ElectionName
+        {
+            get { return _electionName; }
+            set
+            {
+                if (value == _electionName) return;
+                _electionName = value;
+            }
+        }
+
         public event EventHandler<AccessTypeEventArgs> CastVoteCandidateBtnClickEventRaised;
         public event EventHandler<AccessTypeEventArgs> CandidateDDSelectedIndexChangedEventRaised;
 
-        //public event EventHandler AdminCreateElectionViewReadyToShowEventRaised;
 
+        public event EventHandler CastCandidateVoteViewReadyToShowEventRaised;
 
+        public void ClearExistingBindings()
+        {
+            ElectionNameTextInputUC.InputBoxText = "";
+            //dropdownElectionList.SelectedIndex = 0;
 
-        public void SetUpUserCastVoteCandidateView(Dictionary<string, Binding> bindingDictionary, IEnumerable<CandidateModel> _candidates,
+            ElectionNameTextInputUC.InputBoxDataBindings.Clear();
+        }
+
+        public void HideControls()
+        {
+            ElectionNameTextInputUC.Visible = false;
+            dropdownCandidateList.Visible = false;
+            CandidateLabel.Visible = false;
+            CastVoteButton.Visible = false;
+        }
+
+        public void ShowVoteCastLabel()
+        {
+            castVotelbl.Visible = true;
+        }
+        public void ShowAwaitingRegistrationLabel()
+        {
+            AwaitingRegLbl.Visible = true;
+        }
+        public void SetUpUserCastCandidateVoteView(Dictionary<string, Binding> bindingDictionary, IEnumerable<CandidateModel> _candidates,
                                       AccessTypeEventArgs accessTypeEventArgs)
         {
             BindCandidateModelToView(bindingDictionary);
@@ -69,28 +103,24 @@ namespace PresentationLayer.Views.UserControls.Voter
             ElectionNameTextInputUC.InputBoxDataBindings.Add(bindingDictionary["ElectionName"]);
         }
 
-        public void ClearExistingBindings()
-        {
-            ElectionNameTextInputUC.InputBoxText = "";
 
-            ElectionNameTextInputUC.InputBoxDataBindings.Clear();
-        }
 
-        private void AddButton_Click(object sender, EventArgs e)
-        {
-            _accessTypeEventArgs.AccessTypeValue = AccessTypeEventArgs.AccessType.Add;
-
-            SelectedCandidateId = (int)dropdownCandidateList.SelectedValue;
-
-            EventHelpers.RaiseEvent(this, CastVoteCandidateBtnClickEventRaised, (AccessTypeEventArgs)_accessTypeEventArgs);
-
-        }
 
         private void dropdownCandidateList_SelectedIndexChanged(object sender, EventArgs e)
         {
             _accessTypeEventArgs.AccessTypeValue = AccessTypeEventArgs.AccessType.Read;
 
             EventHelpers.RaiseEvent(this, CandidateDDSelectedIndexChangedEventRaised, (AccessTypeEventArgs)_accessTypeEventArgs);
+
+        }
+
+        private void CastVoteButton_Click(object sender, EventArgs e)
+        {
+            _accessTypeEventArgs.AccessTypeValue = AccessTypeEventArgs.AccessType.Update;
+
+            SelectedCandidateId = (int)dropdownCandidateList.SelectedValue;
+
+            EventHelpers.RaiseEvent(this, CastVoteCandidateBtnClickEventRaised, (AccessTypeEventArgs)_accessTypeEventArgs);
 
         }
     }

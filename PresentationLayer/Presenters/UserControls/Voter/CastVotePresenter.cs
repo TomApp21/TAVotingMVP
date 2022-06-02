@@ -36,6 +36,7 @@ namespace PresentationLayer.Presenters.UserControls.Admin
         private string _candidateName;
         private string _electionName;
         private int _candidateId;
+        private int _userId;
 
         private IList<CandidateModel> _candidates;
 
@@ -46,7 +47,7 @@ namespace PresentationLayer.Presenters.UserControls.Admin
 
 
 
-        public ICastVoteViewUC GetCastCandidateVoteViewUC(int userId)
+        public ICastVoteViewUC GetCastCandidateVoteViewUC()
         {
             return _castVoteCandidateViewUC;
         }
@@ -69,9 +70,9 @@ namespace PresentationLayer.Presenters.UserControls.Admin
 
         private void SubscribeToEventsSetup()
         {
-            _castVoteCandidateViewUC.CreateCandidateBtnClickEventRaised += new EventHandler<AccessTypeEventArgs>(OnCreateCandidateBtnClickEventRaised);
+            _castVoteCandidateViewUC.CastVoteCandidateBtnClickEventRaised  += new EventHandler<AccessTypeEventArgs>(OnCastCandidateBtnClickEventRaised);
 
-            _castVoteCandidateViewUC.ElectionDDSelectedIndexChangedEventRaised += new EventHandler<AccessTypeEventArgs>(OnElectionDDSelectedIndexChangedEventRaised);
+            _castVoteCandidateViewUC.CandidateDDSelectedIndexChangedEventRaised += new EventHandler<AccessTypeEventArgs>(OnCandidateDDSelectedIndexChangedEventRaised);
         }
 
         public void BuildDatasourceForEligibleCandidatesList(int userId)
@@ -83,25 +84,32 @@ namespace PresentationLayer.Presenters.UserControls.Admin
             // get election name
 
             VoterModel thisVoter = _voterServices.GetVoterById(userId);
-            int electionId = thisVoter.ElectionId;
 
-            ElectionModel thisElection = _electionServices.GetElectionById(electionId);
+            if (!thisVoter.VoterIdentityConfirmed)
+            {
+                _castVoteCandidateViewUC.HideControls();
+                _castVoteCandidateViewUC.ShowAwaitingRegistrationLabel();
+            }
+            else if (thisVoter.CastVote)
+            {
+                _castVoteCandidateViewUC.HideControls();
+                _castVoteCandidateViewUC.ShowVoteCastLabel();
+            }
+            else
+            {
 
-            IEnumerable<CandidateModel> allCandidates = (IEnumerable<CandidateModel>)_candidateServices.GetCandidatesForElection(userId);
+                int electionId = thisVoter.ElectionId;
 
-            _candidates = allCandidates.ToList(); //.ToList();
+                ElectionModel thisElection = _electionServices.GetElectionById(electionId);
 
-            _electionName = thisElection.ElectionName;
+                IEnumerable<CandidateModel> allCandidates = (IEnumerable<CandidateModel>)_candidateServices.GetCandidatesForElection(thisElection.ElectionId);
 
-            //_electionSelectDtoBindingList = new BindingList<ElectionModel>();
-            //foreach (ElectionModel electionModel in allElections)
-            //{
-            //    _electionSelectDtoBindingList.Add(electionModel);
-            //};
+                _candidates = allCandidates.ToList();
 
-            //_electionSelectDtoBindingSource = new BindingSource();//Reset
-
-            //this._electionSelectDtoBindingSource.DataSource = _electionSelectDtoBindingList;
+                _electionName = thisElection.ElectionName;
+                _userId = userId;
+                _castVoteCandidateViewUC.ElectionName = _electionName;
+            }
 
         }
 
@@ -119,7 +127,7 @@ namespace PresentationLayer.Presenters.UserControls.Admin
 
             AccessTypeEventArgs accessTypeEventArgs = new AccessTypeEventArgs();
 
-            accessTypeEventArgs.AccessTypeValue = AccessTypeEventArgs.AccessType.Add;
+            accessTypeEventArgs.AccessTypeValue = AccessTypeEventArgs.AccessType.Update;
 
             _castVoteCandidateViewUC.SetUpUserCastCandidateVoteView(candidateModelbindingDictionary, _candidates, accessTypeEventArgs);
 
@@ -129,15 +137,15 @@ namespace PresentationLayer.Presenters.UserControls.Admin
         private void SetupBindingsForView(Dictionary<string, Binding> candidateModelbindingDictionary)
         {
 
-            Binding candidateNameBinding = new Binding("Text", this, "CandidateName", false, DataSourceUpdateMode.OnPropertyChanged);
+            Binding candidateNameBinding = new Binding("Text", this, "ElectionName", false, DataSourceUpdateMode.OnPropertyChanged);
 
 
             //Store bindings into a dictionary for the View to access for its textBoxes
-            candidateModelbindingDictionary.Add("CandidateName", candidateNameBinding);
+            candidateModelbindingDictionary.Add("ElectionName", candidateNameBinding);
 
         }
 
-        private void OnCreateCandidateBtnClickEventRaised(object sender, AccessTypeEventArgs accessTypeEventArgs)
+        private void OnCastCandidateBtnClickEventRaised(object sender, AccessTypeEventArgs accessTypeEventArgs)
         {
 
             _candidateModelWithoutBinding.CandidateName = _candidateName;
@@ -145,11 +153,13 @@ namespace PresentationLayer.Presenters.UserControls.Admin
             _candidateModelWithoutBinding.CandidateId = _candidateId; 
             //_candidateModelWithoutBinding.ElectionId = _electionId;
 
+
+
             try
             {
-                if (accessTypeEventArgs.AccessTypeValue == AccessTypeEventArgs.AccessType.Add)
+                if (accessTypeEventArgs.AccessTypeValue == AccessTypeEventArgs.AccessType.Update)
                 {
-                    _candidateServices.AddCandidate(_candidateModelWithoutBinding); //Use model service to save updated model to database 
+                    _candidateServices.CastCandidateVote(_candidateModelWithoutBinding.CandidateId, _userId); //Use model service to save updated model to database 
                 }
 
                 InitializeValues();
@@ -163,13 +173,16 @@ namespace PresentationLayer.Presenters.UserControls.Admin
 
             // Display success message/ clear bindings
             // ---------------------------------------
-            MessageBox.Show("Candidate Successfully Added");
-            _castVoteCandidateViewUC.ClearExistingBindings();
+            MessageBox.Show("Vote Successfully Cast");
+
+            _castVoteCandidateViewUC.HideControls();
+            _castVoteCandidateViewUC.ShowVoteCastLabel();
+
         }
 
-        private void OnElectionDDSelectedIndexChangedEventRaised(object sender, AccessTypeEventArgs accessTypeEventArgs)
+        private void OnCandidateDDSelectedIndexChangedEventRaised(object sender, AccessTypeEventArgs accessTypeEventArgs)
         {
-            EventHelpers.RaiseEvent(this, ElectionDDSelectedIndexChangedEventRaised, accessTypeEventArgs);
+            EventHelpers.RaiseEvent(this, CandidateDDSelectedIndexChangedEventRaised, accessTypeEventArgs);
         }
 
 

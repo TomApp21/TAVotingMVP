@@ -11,5 +11,6 @@
         string NationalInsurance { get; set; }
         string Postcode { get; set; }
         bool VoterIdentityConfirmed { get; set; }
+        bool CastVote { get; set; }
     }
 }

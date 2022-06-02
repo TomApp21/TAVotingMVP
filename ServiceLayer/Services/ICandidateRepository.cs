@@ -11,5 +11,8 @@ namespace ServiceLayer.Services
     {
         void AddCandidate(ICandidateModel candidateModel);
 
+        IEnumerable<ICandidateModel> GetCandidatesForElection(int electionId);
+
+        void CastCandidateVote(int candidateId, int userId);
     }
 }

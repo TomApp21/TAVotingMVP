@@ -37,7 +37,7 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
             {
                 try
                 {
-                    string sql = "SELECT * FROM Users WHERE IsVoter = 1 AND IsAdmin = 0 AND IsAuditor = 0 AND VoterIdentityConfirmed = 0 AND AwaitingConfirmation = 1";
+                    string sql = "SELECT * FROM Users WHERE IsVoter = 1 AND IsAdmin = 0 AND IsAuditor = 0 AND VoterIdentityConfirmed = 0 AND AwaitingConfirmation = 1 AND FirstName IS NOT NULL";
 
                     sqlLiteConnection.Open();
 
@@ -57,7 +57,7 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
                                 voterModel.VoterIdentityConfirmed = Convert.ToBoolean(reader["VoterIdentityConfirmed"]);
                                 voterModel.NationalInsurance = reader["NationalInsurance"].ToString();
                                 voterModel.ElectionId = Convert.ToInt32(reader["ElectionId"]);
-                                
+
                                 voterModelList.Add(voterModel);
                             }
                         }

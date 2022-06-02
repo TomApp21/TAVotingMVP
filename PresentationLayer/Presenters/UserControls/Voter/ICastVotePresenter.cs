@@ -27,8 +27,10 @@ namespace PresentationLayer.Presenters.UserControls.Admin
         event PropertyChangedEventHandler PropertyChanged;
 
 
-        ICastVoteViewUC GetCastCandidateVoteViewUC(int userId);
+        ICastVoteViewUC GetCastCandidateVoteViewUC();
         void SetupCastCandidateVoteViewForAdd(int userId);
+
+
 
     }
 }

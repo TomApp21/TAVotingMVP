@@ -82,6 +82,8 @@ namespace PresentationLayer.Presenters
             _userControList.Add((UserControl)_createElectionPresenter.GetCreateElectionViewUC());
 
             _userControList.Add((UserControl)_addCandidatePresenter.GetAddCandidateViewUC());
+            _userControList.Add((UserControl)_castVotePresenter.GetCastCandidateVoteViewUC());
+
 
 
             AssignUserControlToMainViewPanel((BaseUserControUC)_userLoginPresenter.GetLoginUserViewUC());
@@ -90,6 +92,7 @@ namespace PresentationLayer.Presenters
             AssignUserControlToMainViewPanel((BaseUserControUC)_confirmIdentityPresenter.GetConfirmIdentityViewUC());
             AssignUserControlToMainViewPanel((BaseUserControUC)_createElectionPresenter.GetCreateElectionViewUC());
             AssignUserControlToMainViewPanel((BaseUserControUC)_addCandidatePresenter.GetAddCandidateViewUC());
+            AssignUserControlToMainViewPanel((BaseUserControUC)_castVotePresenter.GetCastCandidateVoteViewUC());
 
 
 
@@ -128,7 +131,7 @@ namespace PresentationLayer.Presenters
 
             _castVotePresenter.SetupCastCandidateVoteViewForAdd(u);
 
-            SetUserControlVisibleInPanel((UserControl)_castVotePresenter.GetCastCandidateVoteViewUC(u));
+            SetUserControlVisibleInPanel((UserControl)_castVotePresenter.GetCastCandidateVoteViewUC());
         }
 
 

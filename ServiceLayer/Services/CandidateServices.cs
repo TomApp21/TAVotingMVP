@@ -44,6 +44,16 @@ namespace ServiceLayer.Services
             _candidateRepository.AddCandidate(candidateModel);
         }
 
+        public IEnumerable<ICandidateModel> GetCandidatesForElection(int electionId)
+        {
+            return _candidateRepository.GetCandidatesForElection(electionId);
+        }
+
+        public void CastCandidateVote(int candidateId, int userId)
+        {
+            _candidateRepository.CastCandidateVote(candidateId, userId);
+        }
+
         public void ValidateModelDataAnnotations(ICandidateModel candidateModel)
         {
             _modelDataAnnotationCheck.ValidateModelDataAnnotations(candidateModel);

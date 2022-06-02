@@ -47,6 +47,9 @@ namespace PresentationLayer.Views.UserControls.Admin
         public AddCandidateViewUC()
         {
             InitializeComponent();
+
+
+
             _accessTypeEventArgs = new AccessTypeEventArgs();
 
         }
@@ -79,6 +82,8 @@ namespace PresentationLayer.Views.UserControls.Admin
 
             CandidateNameTextInputUC.InputBoxDataBindings.Clear();
         }
+
+
 
 
         private void dropdownElectionList_SelectedIndexChanged(object sender, EventArgs e)

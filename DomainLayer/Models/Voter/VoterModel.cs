@@ -43,6 +43,8 @@ namespace DomainLayer.Models.Voter
 
         public bool VoterIdentityConfirmed { get; set; }
 
+        public bool CastVote { get; set; }
+
 
 
     }

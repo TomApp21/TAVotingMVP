@@ -32,6 +32,8 @@
             this.dropdownCandidateList = new System.Windows.Forms.ComboBox();
             this.CastVoteButton = new System.Windows.Forms.Button();
             this.ElectionNameTextInputUC = new CommonComponents.TextInputUnderlineNoBoxUC();
+            this.castVotelbl = new System.Windows.Forms.Label();
+            this.AwaitingRegLbl = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // CandidateLabel
@@ -72,6 +74,7 @@
             this.CastVoteButton.TabIndex = 63;
             this.CastVoteButton.Text = "Cast Vote";
             this.CastVoteButton.UseVisualStyleBackColor = true;
+            this.CastVoteButton.Click += new System.EventHandler(this.CastVoteButton_Click);
             // 
             // ElectionNameTextInputUC
             // 
@@ -82,7 +85,7 @@
             this.ElectionNameTextInputUC.InputBoxLocation = new System.Drawing.Point(2, 20);
             this.ElectionNameTextInputUC.InputBoxReadOnly = true;
             this.ElectionNameTextInputUC.InputBoxText = "";
-            this.ElectionNameTextInputUC.InputBoxWidth = 603;
+            this.ElectionNameTextInputUC.InputBoxWidth = 507;
             this.ElectionNameTextInputUC.InputLabelBackgroundColor = System.Drawing.Color.White;
             this.ElectionNameTextInputUC.InputLabelColor = System.Drawing.SystemColors.ControlText;
             this.ElectionNameTextInputUC.InputLabelFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -91,17 +94,39 @@
             this.ElectionNameTextInputUC.InputLabelText = "Election Name";
             this.ElectionNameTextInputUC.InputLabelWidth = 131;
             this.ElectionNameTextInputUC.InputLineLabelLocation = new System.Drawing.Point(2, 35);
-            this.ElectionNameTextInputUC.InputLineLabelWidth = 603;
+            this.ElectionNameTextInputUC.InputLineLabelWidth = 507;
             this.ElectionNameTextInputUC.Location = new System.Drawing.Point(168, 90);
             this.ElectionNameTextInputUC.Margin = new System.Windows.Forms.Padding(6, 8, 6, 8);
             this.ElectionNameTextInputUC.Name = "ElectionNameTextInputUC";
             this.ElectionNameTextInputUC.Size = new System.Drawing.Size(270, 57);
             this.ElectionNameTextInputUC.TabIndex = 62;
             // 
+            // castVotelbl
+            // 
+            this.castVotelbl.AutoSize = true;
+            this.castVotelbl.Location = new System.Drawing.Point(202, 304);
+            this.castVotelbl.Name = "castVotelbl";
+            this.castVotelbl.Size = new System.Drawing.Size(237, 20);
+            this.castVotelbl.TabIndex = 67;
+            this.castVotelbl.Text = "You have already cast your vote.";
+            this.castVotelbl.Visible = false;
+            // 
+            // AwaitingRegLbl
+            // 
+            this.AwaitingRegLbl.AutoSize = true;
+            this.AwaitingRegLbl.Location = new System.Drawing.Point(163, 284);
+            this.AwaitingRegLbl.Name = "AwaitingRegLbl";
+            this.AwaitingRegLbl.Size = new System.Drawing.Size(338, 20);
+            this.AwaitingRegLbl.TabIndex = 66;
+            this.AwaitingRegLbl.Text = "Awaiting identity verification from administrator.";
+            this.AwaitingRegLbl.Visible = false;
+            // 
             // CastVoteViewUC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.castVotelbl);
+            this.Controls.Add(this.AwaitingRegLbl);
             this.Controls.Add(this.CandidateLabel);
             this.Controls.Add(this.dropdownCandidateList);
             this.Controls.Add(this.CastVoteButton);
@@ -119,5 +144,7 @@
         private System.Windows.Forms.ComboBox dropdownCandidateList;
         private System.Windows.Forms.Button CastVoteButton;
         private CommonComponents.TextInputUnderlineNoBoxUC ElectionNameTextInputUC;
+        private System.Windows.Forms.Label castVotelbl;
+        private System.Windows.Forms.Label AwaitingRegLbl;
     }
 }

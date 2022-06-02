@@ -100,6 +100,8 @@ namespace PresentationLayer
                 .RegisterType<IElectionServices, ElectionServices>(new ContainerControlledLifetimeManager())
                 .RegisterType<IElectionRepository, ElectionRepository>(new InjectionConstructor(_connectionString))
 
+                .RegisterType<ICastVotePresenter, CastVotePresenter>(new ContainerControlledLifetimeManager())
+                .RegisterType<ICastVoteViewUC, CastVoteViewUC>(new ContainerControlledLifetimeManager())
 
 
                 .RegisterType<ICandidateServices, CandidateServices>(new ContainerControlledLifetimeManager())

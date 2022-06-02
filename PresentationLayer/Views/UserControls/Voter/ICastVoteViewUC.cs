@@ -13,13 +13,20 @@ namespace PresentationLayer.Views.UserControls.Voter
     {
         AccessTypeEventArgs AccessTypeEventArgs { get; set; }
         int SelectedCandidateId { get; set; }
+        string ElectionName { get; set; }
 
-        event EventHandler<AccessTypeEventArgs> CreateCandidateBtnClickEventRaised;
-        event EventHandler<AccessTypeEventArgs> ElectionDDSelectedIndexChangedEventRaised;
+        event EventHandler<AccessTypeEventArgs> CastVoteCandidateBtnClickEventRaised;
+        event EventHandler<AccessTypeEventArgs> CandidateDDSelectedIndexChangedEventRaised;
+        event EventHandler CastCandidateVoteViewReadyToShowEventRaised;
 
         void BindCandidateModelToView(Dictionary<string, Binding> bindingDictionary);
         void ClearExistingBindings();
         void SetUpUserCastCandidateVoteView(Dictionary<string, Binding> bindingDictionary, IEnumerable<CandidateModel> x, AccessTypeEventArgs accessTypeEventArgs);
+
+        void HideControls();
+
+        void ShowVoteCastLabel();
+        void ShowAwaitingRegistrationLabel();
 
     }
 }
