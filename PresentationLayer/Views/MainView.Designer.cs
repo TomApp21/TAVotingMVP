@@ -58,45 +58,48 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.userControlPanel.BackColor = System.Drawing.Color.White;
-            this.userControlPanel.Location = new System.Drawing.Point(1, 138);
+            this.userControlPanel.Location = new System.Drawing.Point(2, 212);
+            this.userControlPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.userControlPanel.Name = "userControlPanel";
-            this.userControlPanel.Size = new System.Drawing.Size(697, 336);
+            this.userControlPanel.Size = new System.Drawing.Size(1046, 517);
             this.userControlPanel.TabIndex = 0;
             // 
             // underlineLabel
             // 
             this.underlineLabel.BackColor = System.Drawing.Color.Black;
             this.underlineLabel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.underlineLabel.Location = new System.Drawing.Point(72, 122);
+            this.underlineLabel.Location = new System.Drawing.Point(108, 188);
+            this.underlineLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.underlineLabel.Name = "underlineLabel";
-            this.underlineLabel.Size = new System.Drawing.Size(97, 4);
+            this.underlineLabel.Size = new System.Drawing.Size(146, 6);
             this.underlineLabel.TabIndex = 9;
             this.underlineLabel.Text = "label1";
             // 
             // moreOptionsContextMenuStrip
             // 
+            this.moreOptionsContextMenuStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.moreOptionsContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.helpAboutToolStripMenuItem,
             this.SettingsToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.moreOptionsContextMenuStrip.Name = "moreOptionsContextMenuStrip";
-            this.moreOptionsContextMenuStrip.Size = new System.Drawing.Size(117, 70);
+            this.moreOptionsContextMenuStrip.Size = new System.Drawing.Size(149, 100);
             // 
             // helpAboutToolStripMenuItem
             // 
             this.helpAboutToolStripMenuItem.Name = "helpAboutToolStripMenuItem";
-            this.helpAboutToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.helpAboutToolStripMenuItem.Size = new System.Drawing.Size(148, 32);
             // 
             // SettingsToolStripMenuItem
             // 
             this.SettingsToolStripMenuItem.Name = "SettingsToolStripMenuItem";
-            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.SettingsToolStripMenuItem.Size = new System.Drawing.Size(148, 32);
             this.SettingsToolStripMenuItem.Text = "Settings";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(148, 32);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -105,8 +108,9 @@
             this.loginBtn.Dock = System.Windows.Forms.DockStyle.Left;
             this.loginBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.loginBtn.Location = new System.Drawing.Point(0, 0);
+            this.loginBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.loginBtn.Name = "loginBtn";
-            this.loginBtn.Size = new System.Drawing.Size(55, 39);
+            this.loginBtn.Size = new System.Drawing.Size(82, 60);
             this.loginBtn.TabIndex = 11;
             this.loginBtn.Text = "Log In";
             this.loginBtn.UseVisualStyleBackColor = true;
@@ -116,9 +120,10 @@
             // 
             this.registerBtn.Dock = System.Windows.Forms.DockStyle.Left;
             this.registerBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.registerBtn.Location = new System.Drawing.Point(213, 0);
+            this.registerBtn.Location = new System.Drawing.Point(319, 0);
+            this.registerBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.registerBtn.Name = "registerBtn";
-            this.registerBtn.Size = new System.Drawing.Size(74, 39);
+            this.registerBtn.Size = new System.Drawing.Size(111, 60);
             this.registerBtn.TabIndex = 12;
             this.registerBtn.Text = "Register";
             this.registerBtn.UseVisualStyleBackColor = true;
@@ -130,9 +135,10 @@
             this.label1.BackColor = System.Drawing.Color.MidnightBlue;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.label1.Location = new System.Drawing.Point(593, 67);
+            this.label1.Location = new System.Drawing.Point(890, 103);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(98, 20);
+            this.label1.Size = new System.Drawing.Size(140, 29);
             this.label1.TabIndex = 13;
             this.label1.Text = "Voting App";
             this.label1.Click += new System.EventHandler(this.label1_Click);
@@ -147,18 +153,20 @@
             this.panel1.Controls.Add(this.ConfirmIdentitiesButton);
             this.panel1.Controls.Add(this.CreateElectionBtn);
             this.panel1.Controls.Add(this.loginBtn);
-            this.panel1.Location = new System.Drawing.Point(3, 98);
+            this.panel1.Location = new System.Drawing.Point(4, 151);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(873, 39);
+            this.panel1.Size = new System.Drawing.Size(1310, 60);
             this.panel1.TabIndex = 0;
             // 
             // ViewElectionBtn
             // 
             this.ViewElectionBtn.Dock = System.Windows.Forms.DockStyle.Left;
             this.ViewElectionBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ViewElectionBtn.Location = new System.Drawing.Point(607, 0);
+            this.ViewElectionBtn.Location = new System.Drawing.Point(910, 0);
+            this.ViewElectionBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ViewElectionBtn.Name = "ViewElectionBtn";
-            this.ViewElectionBtn.Size = new System.Drawing.Size(79, 39);
+            this.ViewElectionBtn.Size = new System.Drawing.Size(118, 60);
             this.ViewElectionBtn.TabIndex = 18;
             this.ViewElectionBtn.Text = "View Elections";
             this.ViewElectionBtn.UseVisualStyleBackColor = true;
@@ -168,21 +176,24 @@
             // 
             this.CastVoteButton.Dock = System.Windows.Forms.DockStyle.Left;
             this.CastVoteButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CastVoteButton.Location = new System.Drawing.Point(472, 0);
+            this.CastVoteButton.Location = new System.Drawing.Point(708, 0);
+            this.CastVoteButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.CastVoteButton.Name = "CastVoteButton";
-            this.CastVoteButton.Size = new System.Drawing.Size(135, 39);
+            this.CastVoteButton.Size = new System.Drawing.Size(202, 60);
             this.CastVoteButton.TabIndex = 19;
             this.CastVoteButton.Text = "Cast Vote";
             this.CastVoteButton.UseVisualStyleBackColor = true;
             this.CastVoteButton.Visible = false;
+            this.CastVoteButton.Click += new System.EventHandler(this.CastVoteButton_Click);
             // 
             // registerVoterButton
             // 
             this.registerVoterButton.Dock = System.Windows.Forms.DockStyle.Left;
             this.registerVoterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.registerVoterButton.Location = new System.Drawing.Point(367, 0);
+            this.registerVoterButton.Location = new System.Drawing.Point(550, 0);
+            this.registerVoterButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.registerVoterButton.Name = "registerVoterButton";
-            this.registerVoterButton.Size = new System.Drawing.Size(105, 39);
+            this.registerVoterButton.Size = new System.Drawing.Size(158, 60);
             this.registerVoterButton.TabIndex = 14;
             this.registerVoterButton.Text = "Voter Registration";
             this.registerVoterButton.UseVisualStyleBackColor = true;
@@ -193,9 +204,10 @@
             // 
             this.AddCandidateBtn.Dock = System.Windows.Forms.DockStyle.Left;
             this.AddCandidateBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.AddCandidateBtn.Location = new System.Drawing.Point(287, 0);
+            this.AddCandidateBtn.Location = new System.Drawing.Point(430, 0);
+            this.AddCandidateBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.AddCandidateBtn.Name = "AddCandidateBtn";
-            this.AddCandidateBtn.Size = new System.Drawing.Size(80, 39);
+            this.AddCandidateBtn.Size = new System.Drawing.Size(120, 60);
             this.AddCandidateBtn.TabIndex = 16;
             this.AddCandidateBtn.Text = "Create Candidate";
             this.AddCandidateBtn.UseVisualStyleBackColor = true;
@@ -206,9 +218,10 @@
             // 
             this.ConfirmIdentitiesButton.Dock = System.Windows.Forms.DockStyle.Left;
             this.ConfirmIdentitiesButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ConfirmIdentitiesButton.Location = new System.Drawing.Point(133, 0);
+            this.ConfirmIdentitiesButton.Location = new System.Drawing.Point(199, 0);
+            this.ConfirmIdentitiesButton.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.ConfirmIdentitiesButton.Name = "ConfirmIdentitiesButton";
-            this.ConfirmIdentitiesButton.Size = new System.Drawing.Size(80, 39);
+            this.ConfirmIdentitiesButton.Size = new System.Drawing.Size(120, 60);
             this.ConfirmIdentitiesButton.TabIndex = 15;
             this.ConfirmIdentitiesButton.Text = "Confirm Identities";
             this.ConfirmIdentitiesButton.UseVisualStyleBackColor = true;
@@ -219,9 +232,10 @@
             // 
             this.CreateElectionBtn.Dock = System.Windows.Forms.DockStyle.Left;
             this.CreateElectionBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CreateElectionBtn.Location = new System.Drawing.Point(55, 0);
+            this.CreateElectionBtn.Location = new System.Drawing.Point(82, 0);
+            this.CreateElectionBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.CreateElectionBtn.Name = "CreateElectionBtn";
-            this.CreateElectionBtn.Size = new System.Drawing.Size(78, 39);
+            this.CreateElectionBtn.Size = new System.Drawing.Size(117, 60);
             this.CreateElectionBtn.TabIndex = 17;
             this.CreateElectionBtn.Text = "Create Election";
             this.CreateElectionBtn.UseVisualStyleBackColor = true;
@@ -231,9 +245,10 @@
             // LogOutBtn
             // 
             this.LogOutBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LogOutBtn.Location = new System.Drawing.Point(549, 12);
+            this.LogOutBtn.Location = new System.Drawing.Point(824, 18);
+            this.LogOutBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.LogOutBtn.Name = "LogOutBtn";
-            this.LogOutBtn.Size = new System.Drawing.Size(135, 23);
+            this.LogOutBtn.Size = new System.Drawing.Size(202, 35);
             this.LogOutBtn.TabIndex = 20;
             this.LogOutBtn.Text = "Log Out";
             this.LogOutBtn.UseVisualStyleBackColor = true;
@@ -243,18 +258,19 @@
             // 
             this.gardenPictureBox.Image = global::PresentationLayer.Properties.Resources.rsz_1denny_muller_jyrti3loqnc_unsplash;
             this.gardenPictureBox.Location = new System.Drawing.Point(0, 0);
+            this.gardenPictureBox.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.gardenPictureBox.Name = "gardenPictureBox";
-            this.gardenPictureBox.Size = new System.Drawing.Size(698, 92);
+            this.gardenPictureBox.Size = new System.Drawing.Size(1047, 142);
             this.gardenPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.gardenPictureBox.TabIndex = 10;
             this.gardenPictureBox.TabStop = false;
             // 
             // MainView
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(698, 473);
+            this.ClientSize = new System.Drawing.Size(1047, 728);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.LogOutBtn);
             this.Controls.Add(this.label1);
@@ -262,6 +278,7 @@
             this.Controls.Add(this.underlineLabel);
             this.Controls.Add(this.userControlPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "MainView";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

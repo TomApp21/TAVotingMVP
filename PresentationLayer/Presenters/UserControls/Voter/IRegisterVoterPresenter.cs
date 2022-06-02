@@ -15,7 +15,6 @@ namespace PresentationLayer.Presenters.UserControls.Voter
 
         void SetupVoterReg(int loggedInUserId);
 
-
         string FirstName { get; set; }
 
         int ElectionId { get; set; }

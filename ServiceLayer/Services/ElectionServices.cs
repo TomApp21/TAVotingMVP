@@ -31,8 +31,12 @@ namespace ServiceLayer.Services
         //}
 
 
+        public ElectionModel GetElectionById(int electionId)
+        {
+            return _electionRepository.GetElectionById(electionId);
+        }
 
-        public IEnumerable<IElectionModel> GetAllValidElections()
+    public IEnumerable<IElectionModel> GetAllValidElections()
         {
 
             return _electionRepository.GetAllValidElections();

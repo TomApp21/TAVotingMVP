@@ -10,6 +10,8 @@ namespace ServiceLayer.Services
     public interface IElectionRepository
     {
         IEnumerable<IElectionModel> GetAllValidElections();
+
+        
         ElectionModel GetElectionById(int electionId);
 
     }

@@ -125,6 +125,8 @@
     <Compile Include="Presenters\UserControls\LoginPresenter.cs" />
     <Compile Include="Presenters\UserControls\RegisterPresenter.cs" />
     <Compile Include="Presenters\UserControls\Admin\CreateElectionPresenter.cs" />
+    <Compile Include="Presenters\UserControls\Voter\CastVotePresenter.cs" />
+    <Compile Include="Presenters\UserControls\Voter\ICastVotePresenter.cs" />
     <Compile Include="Presenters\UserControls\Voter\IRegisterVoterPresenter.cs" />
     <Compile Include="Presenters\UserControls\Voter\RegisterVoterPresenter.cs" />
     <Compile Include="Program.cs" />
@@ -186,6 +188,13 @@
     <Compile Include="Views\UserControls\LoginUC.Designer.cs">
       <DependentUpon>LoginUC.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\Voter\CastVoteViewUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\UserControls\Voter\CastVoteViewUC.Designer.cs">
+      <DependentUpon>CastVoteViewUC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControls\Voter\ICastVoteViewUC.cs" />
     <Compile Include="Views\UserControls\Voter\IVoterRegistrationUC.cs" />
     <Compile Include="Views\UserControls\Voter\VoterRegistrationUC.cs">
       <SubType>UserControl</SubType>
@@ -221,6 +230,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\LoginUC.resx">
       <DependentUpon>LoginUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\UserControls\Voter\CastVoteViewUC.resx">
+      <DependentUpon>CastVoteViewUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\UserControls\Voter\VoterRegistrationUC.resx">
       <DependentUpon>VoterRegistrationUC.cs</DependentUpon>

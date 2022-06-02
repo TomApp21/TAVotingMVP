@@ -16,6 +16,7 @@ namespace PresentationLayer.Views
         public event EventHandler ConfirmIdentityMenuBtnClickEventRaised;
         public event EventHandler CreateElectionMenuBtnClickEventRaised;
         public event EventHandler AddCandidateMenuBtnClickEventRaised;
+        public event EventHandler CastVoteMenuBtnClickEventRaised;
 
 
         public event EventHandler LoggedInSuccessfullyEventRaised;
@@ -144,6 +145,13 @@ namespace PresentationLayer.Views
             EventHelpers.RaiseEvent(this, RegisterVoterMenuBtnClickEventRaised, e);
 
             ButtonHelper.SetUnderlinePosition(registerBtn, underlineLabel);
+        }
+
+        private void CastVoteButton_Click(object sender, EventArgs e)
+        {
+            EventHelpers.RaiseEvent(this, CastVoteMenuBtnClickEventRaised, e);
+
+            ButtonHelper.SetUnderlinePosition(CastVoteButton, underlineLabel);
         }
 
 
