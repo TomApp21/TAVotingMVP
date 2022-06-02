@@ -27,7 +27,7 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
             VoterModel voterModel = new VoterModel();
             DataAccessStatus dataAccessStatus = new DataAccessStatus();
             bool MatchingRecordFound = false;
-            string sql = "SELECT FirstName, LastName, DateOfBirth, AddressLine1, AddressLine2, Postcode, NationalInsurance, ElectionId " +
+            string sql = "SELECT FirstName, LastName, DateOfBirth, AddressLine1, AddressLine2, Postcode, NationalInsurance, ElectionId, VoterIdentityConfirmed " +
                          "FROM Users WHERE UserId = @UserId";
 
             using (SQLiteConnection sqlLiteConnection = new SQLiteConnection(_connectionString))
@@ -57,6 +57,7 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
                                 voterModel.Postcode = reader["Postcode"].ToString();
                                 voterModel.NationalInsurance = reader["NationalInsurance"].ToString();
                                 voterModel.ElectionId = Int32.Parse(reader["ElectionId"].ToString());
+                                voterModel.VoterIdentityConfirmed = Convert.ToBoolean(reader["VoterIdentityConfirmed"]);
                             }
                         }
                         

@@ -16,6 +16,6 @@ namespace PresentationLayer.Views.UserControls.Admin
 
         void BindCandidateModelToView(Dictionary<string, Binding> bindingDictionary);
         void ClearExistingBindings();
-        void SetUpUserCreateCandidateView(Dictionary<string, Binding> bindingDictionary, AccessTypeEventArgs accessTypeEventArgs);
+        void SetUpUserCreateCandidateView(Dictionary<string, Binding> bindingDictionary, IEnumerable<ElectionModel> x, AccessTypeEventArgs accessTypeEventArgs);
     }
 }

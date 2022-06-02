@@ -22,6 +22,12 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
         {
             _connectionString = connectionString;
         }
+
+        /// <summary>
+        /// Gets all voters where not confirmed.
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="DataAccessException"></exception>
         public IEnumerable<IVoterModel> GetAll()
         {
             List<VoterModel> voterModelList = new List<VoterModel>();
@@ -31,7 +37,7 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
             {
                 try
                 {
-                    string sql = "SELECT * FROM Users WHERE IsVoter = 1 AND VoterIdentityConfirmed IS NULL";
+                    string sql = "SELECT * FROM Users WHERE IsVoter = 1 AND IsAdmin = 0 AND IsAuditor = 0 AND VoterIdentityConfirmed = 0 AND AwaitingConfirmation = 1";
 
                     sqlLiteConnection.Open();
 
@@ -48,7 +54,9 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
                                 voterModel.AddressLine1 = reader["AddressLine1"].ToString();
                                 voterModel.AddressLine2 = reader["AddressLine2"].ToString();
                                 voterModel.Postcode = reader["Postcode"].ToString();
+                                voterModel.VoterIdentityConfirmed = Convert.ToBoolean(reader["VoterIdentityConfirmed"]);
                                 voterModel.NationalInsurance = reader["NationalInsurance"].ToString();
+                                
                                 voterModelList.Add(voterModel);
                             }
                         }
@@ -69,6 +77,7 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
         {
             int result = -1;
             DataAccessStatus dataAccessStatus = new DataAccessStatus();
+            bool awaitingConfirmation = false;
 
             using (SQLiteConnection sqlLiteConnection = new SQLiteConnection(_connectionString))
             {
@@ -86,6 +95,7 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
                 string updateSql =
                        "UPDATE Users "
                      + "SET VoterIdentityConfirmed = @IdentityConfirmed "
+                     + "AND AwaitingConfirmation = @AwaitingConfirmation "
                      + "WHERE FirstName = @FirstName "
                      + "AND LastName = @LastName "
                      + "AND DateOfBirth = @DateOfBirth "
@@ -115,6 +125,7 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
 
                     cmd.Prepare();
                     cmd.Parameters.AddWithValue("@IdentityConfirmed", identityConfirmed);
+                    cmd.Parameters.AddWithValue("@AwaitingConfirmation", awaitingConfirmation);
                     cmd.Parameters.AddWithValue("@FirstName", voterModel.FirstName);
                     cmd.Parameters.AddWithValue("@LastName", voterModel.LastName);
                     cmd.Parameters.AddWithValue("@DateOfBirth", voterModel.DateOfBirth);

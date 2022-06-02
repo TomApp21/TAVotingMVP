@@ -53,22 +53,15 @@ namespace PresentationLayer.Views.UserControls.Admin
 
 
 
-        public void SetUpUserCreateCandidateView(Dictionary<string, Binding> bindingDictionary, 
+        public void SetUpUserCreateCandidateView(Dictionary<string, Binding> bindingDictionary, IEnumerable<ElectionModel> _elections, 
                                       AccessTypeEventArgs accessTypeEventArgs)
         {
             BindCandidateModelToView(bindingDictionary);
             _accessTypeEventArgs = accessTypeEventArgs;
 
-            this.dropdownElectionList.DataSource = bindingDictionary["Elections"];
+            this.dropdownElectionList.DataSource = _elections;
+            this.dropdownElectionList.ValueMember = "ElectionId";
             this.dropdownElectionList.DisplayMember = "ElectionName";
-            this.dropdownElectionList.ValueMember = "SelectedValue";
-
-            //dropdownElectionList.DataSource = bindingDicti;
-            //dropdownElectionList.DisplayMember = "ElectionName";
-            //dropdownElectionList.ValueMember = "ElectionId";
-            
-
-        
 
     }
 
@@ -77,12 +70,6 @@ namespace PresentationLayer.Views.UserControls.Admin
             ClearExistingBindings();
 
             CandidateNameTextInputUC.InputBoxDataBindings.Add(bindingDictionary["CandidateName"]);
-            dropdownElectionList.DataBindings.Add(bindingDictionary["ElectionName"]);
-            dropdownElectionList.DataBindings.Add(bindingDictionary["SelectedValue"]);
-            dropdownElectionList.DataBindings.Add(bindingDictionary["Elections"]);
-
-
-
         }
 
         public void ClearExistingBindings()
@@ -111,6 +98,8 @@ namespace PresentationLayer.Views.UserControls.Admin
         {
             _accessTypeEventArgs.AccessTypeValue = AccessTypeEventArgs.AccessType.Add;
 
+            _selectedElectionId = (int)dropdownElectionList.SelectedValue;
+            
             EventHelpers.RaiseEvent(this, CreateCandidateBtnClickEventRaised, (AccessTypeEventArgs)_accessTypeEventArgs);
 
         }

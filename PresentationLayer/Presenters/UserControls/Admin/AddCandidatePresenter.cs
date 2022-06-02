@@ -85,7 +85,7 @@ namespace PresentationLayer.Presenters.UserControls.Admin
 
             IEnumerable<ElectionModel> allElections = (IEnumerable<ElectionModel>)_electionServices.GetAllValidElections();
 
-            _elections = allElections.ToList();
+            _elections = allElections.ToList(); //.ToList();
 
 
 
@@ -117,33 +117,19 @@ namespace PresentationLayer.Presenters.UserControls.Admin
 
             accessTypeEventArgs.AccessTypeValue = AccessTypeEventArgs.AccessType.Add;
 
-            _addCandidateViewUC.SetUpUserCreateCandidateView(candidateModelbindingDictionary, accessTypeEventArgs);
+            _addCandidateViewUC.SetUpUserCreateCandidateView(candidateModelbindingDictionary, _elections, accessTypeEventArgs);
 
             EventHelpers.RaiseEvent(this, AddCandidateViewReadyToShowEventRaised, new EventArgs());
         }
 
         private void SetupBindingsForView(Dictionary<string, Binding> candidateModelbindingDictionary)
         {
-            //BindingSource bindingSource = new BindingSource();
 
-            //bindingSource.DataSource = _elections.ToList();
-
-
-            //Create bindings for data the View will use on its inputs
-            Binding electionListDataSourceBinding = new Binding("DataSource", _electionSelectDtoBindingSource.DataSource, "Elections", true, DataSourceUpdateMode.OnPropertyChanged);
-            Binding electionListSelectedValueBinding = new Binding("SelectedValue", _electionSelectDtoBindingSource, "ElectionId", true, DataSourceUpdateMode.OnValidation);
-            Binding electionNameBinding = new Binding("Text", this, "ElectionName", false, DataSourceUpdateMode.OnPropertyChanged);
             Binding candidateNameBinding = new Binding("Text", this, "CandidateName", false, DataSourceUpdateMode.OnPropertyChanged);
 
-            Binding electionIdBinding = new Binding("Text", this, "ElectionId", false, DataSourceUpdateMode.OnPropertyChanged);
 
             //Store bindings into a dictionary for the View to access for its textBoxes
             candidateModelbindingDictionary.Add("CandidateName", candidateNameBinding);
-            candidateModelbindingDictionary.Add("ElectionId", electionIdBinding);
-            candidateModelbindingDictionary.Add("ElectionName", electionNameBinding);
-
-            candidateModelbindingDictionary.Add("Elections", electionListDataSourceBinding);
-            candidateModelbindingDictionary.Add("SelectedValue", electionListSelectedValueBinding);
 
         }
 
@@ -151,6 +137,7 @@ namespace PresentationLayer.Presenters.UserControls.Admin
         {
 
             _candidateModelWithoutBinding.CandidateName = _candidateName;
+            _electionId = _addCandidateViewUC.SelectedElectionId;
             _candidateModelWithoutBinding.ElectionId = _electionId;
 
             try
@@ -171,7 +158,7 @@ namespace PresentationLayer.Presenters.UserControls.Admin
 
             // Display success message/ clear bindings
             // ---------------------------------------
-            MessageBox.Show("Election Successfully created");
+            MessageBox.Show("Candidate Successfully Added");
             _addCandidateViewUC.ClearExistingBindings();
         }
 

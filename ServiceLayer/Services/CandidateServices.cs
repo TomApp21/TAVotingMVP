@@ -21,6 +21,7 @@ namespace ServiceLayer.Services
         public CandidateServices(ICandidateRepository candidateRepository, IElectionRepository electionRepository, IModelDataAnnotationCheck modelDataAnnotationCheck)
         {
             _candidateRepository = candidateRepository;
+            _electionRepository = electionRepository;
             _modelDataAnnotationCheck = modelDataAnnotationCheck;
         }
 
