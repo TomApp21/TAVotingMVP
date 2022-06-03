@@ -33,6 +33,7 @@
             this.UsernameTextInputUC = new CommonComponents.TextInputUnderlineNoBoxUC();
             this.CancelButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
+
             // 
             // LoginButton
             // 

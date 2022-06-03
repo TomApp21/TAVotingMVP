@@ -78,7 +78,7 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
         {
             int result = -1;
             DataAccessStatus dataAccessStatus = new DataAccessStatus();
-            bool awaitingConfirmation = false;
+            int identCon = Convert.ToInt32(identityConfirmed);
 
             using (SQLiteConnection sqlLiteConnection = new SQLiteConnection(_connectionString))
             {
@@ -95,8 +95,8 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
 
                 string updateSql =
                        "UPDATE Users "
-                     + "SET VoterIdentityConfirmed = @IdentityConfirmed "
-                     + "AND AwaitingConfirmation = @AwaitingConfirmation "
+                     + "SET VoterIdentityConfirmed = @IdentityConfirmed, "
+                     + "AwaitingConfirmation = @AwaitingConfirmation "
                      + "WHERE FirstName = @FirstName "
                      + "AND LastName = @LastName "
                      + "AND DateOfBirth = @DateOfBirth "
@@ -126,7 +126,7 @@ namespace InfrastructureLayer.DataAccess.Repositories.Specific
 
                     cmd.Prepare();
                     cmd.Parameters.AddWithValue("@IdentityConfirmed", identityConfirmed);
-                    cmd.Parameters.AddWithValue("@AwaitingConfirmation", awaitingConfirmation);
+                    cmd.Parameters.AddWithValue("@AwaitingConfirmation", 0);
                     cmd.Parameters.AddWithValue("@FirstName", voterModel.FirstName);
                     cmd.Parameters.AddWithValue("@LastName", voterModel.LastName);
                     cmd.Parameters.AddWithValue("@DateOfBirth", voterModel.DateOfBirth);
